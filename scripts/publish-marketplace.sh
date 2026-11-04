@@ -13,11 +13,13 @@ git clone --quiet "git@github.com:$repo.git" "$work"
 find "$work" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 cp -R "$root/dist-marketplace/." "$work/"
 cd "$work"
+# A freshly created repo has no commits yet; make its first branch main.
+git rev-parse --verify -q HEAD >/dev/null || git symbolic-ref HEAD refs/heads/main
 git add -A
 if git diff --cached --quiet; then
   echo "Marketplace already up to date."
 else
   git commit --quiet -m "Update marketplace"
-  git push --quiet
+  git push --quiet origin HEAD:main
   echo "Pushed marketplace to $repo."
 fi
