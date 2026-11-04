@@ -10,6 +10,7 @@ index.html                     页面（片段格式，可直接发布为 Claude
 app.js                         渲染、筛选、复制命令
 scripts/build.mjs              生成 dist/（可部署的静态站）和 .claude-plugin/marketplace.json
 scripts/refresh.mjs            从 GitHub 拉取最新星数、许可证、更新日期
+scripts/check-install.mjs      对照上游仓库核对每条安装命令（只读取，不下载、不运行）
 .github/workflows/refresh.yml  每周一自动刷新数据并提交
 ```
 

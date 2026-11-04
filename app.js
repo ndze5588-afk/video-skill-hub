@@ -30,6 +30,7 @@
     `<span>核对于 <b>${esc(data.checkedAt)}</b></span>`,
   ].join("");
   $("#checked").textContent = data.checkedAt;
+  $("#install-checked").textContent = data.installCheckedAt || data.checkedAt;
 
   // Timeline
   const clipHtml = (s) =>

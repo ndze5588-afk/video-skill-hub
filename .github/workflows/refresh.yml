@@ -19,6 +19,10 @@ jobs:
       - run: node scripts/refresh.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check install commands
+        run: node scripts/check-install.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: node scripts/build.mjs
       - name: Commit changes
         run: |
