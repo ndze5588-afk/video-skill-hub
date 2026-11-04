@@ -1,0 +1,4 @@
+dist/
+xhs/out/
+.DS_Store
+node_modules/

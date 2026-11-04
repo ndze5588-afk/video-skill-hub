@@ -1,0 +1,422 @@
+{
+  "checkedAt": "2026-11-03",
+  "hub": {
+    "name": "video-skill-hub",
+    "repo": "<你的GitHub用户名>/video-skill-hub"
+  },
+  "stages": [
+    { "id": "plan", "name": "策划·脚本", "hint": "选题、脚本、分镜、角色设定" },
+    { "id": "generate", "name": "素材生成", "hint": "AI 生成镜头、图片、数字人" },
+    { "id": "voice", "name": "配音·音频", "hint": "TTS、音乐、音效、配音" },
+    { "id": "compose", "name": "合成·动画", "hint": "用代码把素材排成视频" },
+    { "id": "edit", "name": "剪辑·处理", "hint": "剪切、拼接、转码、导出" },
+    { "id": "caption", "name": "字幕·本地化", "hint": "转写、字幕、翻译" },
+    { "id": "pipeline", "name": "全流程", "hint": "从一句话到成片" }
+  ],
+  "skills": [
+    {
+      "id": "remotion",
+      "name": "Remotion Skills",
+      "repo": "remotion-dev/skills",
+      "stage": "compose",
+      "official": true,
+      "summary": "Remotion 官方出品，教 agent 用 React 写视频：时间轴、动画、音频、字幕、渲染都有专门的 skill，减少时序和素材引用上的常见错误。",
+      "includes": ["remotion-best-practices", "remotion-create", "remotion-captions", "remotion-multimedia", "remotion-render", "remotion-studio", "remotion-maps", "remotion-upgrade"],
+      "stars": 6173,
+      "license": "见仓库",
+      "updated": "2026-11-02",
+      "apiKey": null,
+      "local": ["Node.js"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add remotion-dev/skills" },
+        { "label": "Claude Code 插件", "cmd": "/plugin marketplace add remotion-dev/claude-code-plugin\n/plugin install remotion@remotion" }
+      ],
+      "plugin": { "repo": "remotion-dev/claude-code-plugin", "name": "remotion" },
+      "note": "公司商用 Remotion 需要购买许可证，详见 remotion.dev/license。"
+    },
+    {
+      "id": "hyperframes",
+      "name": "HyperFrames",
+      "repo": "heygen-com/hyperframes",
+      "stage": "compose",
+      "official": true,
+      "summary": "HeyGen 开源的「写 HTML 出视频」框架，附带一组 skill：合成画面、GSAP 动画、字幕、配音、网页转视频，以及把 Remotion 项目迁移过来。",
+      "includes": ["hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use", "slideshow", "reverse-any-video", "remotion-to-hyperframes", "figma"],
+      "stars": 77891,
+      "license": "Apache-2.0",
+      "updated": "2026-11-03",
+      "apiKey": null,
+      "local": ["Node.js"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add heygen-com/hyperframes" },
+        { "label": "Claude Code 插件", "cmd": "/plugin marketplace add heygen-com/hyperframes\n/plugin install hyperframes@hyperframes" }
+      ],
+      "plugin": { "repo": "heygen-com/hyperframes", "name": "hyperframes" }
+    },
+    {
+      "id": "heygen",
+      "name": "HeyGen Skills",
+      "repo": "heygen-com/skills",
+      "stage": "generate",
+      "official": true,
+      "summary": "用一张照片建数字分身，生成真人出镜的口播视频；也能把已有视频翻译成 175+ 种语言，保留原声并对口型。",
+      "includes": ["heygen-avatar", "heygen-video", "heygen-translate"],
+      "stars": 534,
+      "license": "MIT",
+      "updated": "2026-07-14",
+      "apiKey": "HeyGen",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add heygen-com/skills" },
+        { "label": "Claude Code 插件", "cmd": "/plugin marketplace add heygen-com/skills\n/plugin install heygen@heygen" }
+      ],
+      "plugin": { "repo": "heygen-com/skills", "name": "heygen" }
+    },
+    {
+      "id": "higgsfield",
+      "name": "Higgsfield Skills",
+      "repo": "higgsfield-ai/skills",
+      "stage": "generate",
+      "official": true,
+      "summary": "调用 Higgsfield 生成图片、视频、3D 和音频，另有现成的场景 skill：无露脸短视频、讲解视频、YouTube 封面、产品图、品牌套件。",
+      "includes": ["higgsfield-generate", "higgsfield-faceless-video", "higgsfield-video-explainer", "higgsfield-youtube-thumbnail", "higgsfield-product-photoshoot", "higgsfield-brandkit", "higgsfield-soul-id"],
+      "stars": 1863,
+      "license": "MIT",
+      "updated": "2026-10-27",
+      "apiKey": "Higgsfield",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add higgsfield-ai/skills" },
+        { "label": "Claude Code 插件", "cmd": "/plugin marketplace add higgsfield-ai/skills\n/plugin install higgsfield@higgsfield" }
+      ],
+      "plugin": { "repo": "higgsfield-ai/skills", "name": "higgsfield" }
+    },
+    {
+      "id": "runcomfy-video",
+      "name": "RunComfy AI Video Generation",
+      "repo": "prime-skills/runcomfy-agent-skills",
+      "stage": "generate",
+      "official": false,
+      "summary": "通过 RunComfy 平台调用多种视频生成模型，让 agent 直接产出 AI 视频片段。",
+      "includes": ["ai-video-generation"],
+      "stars": 61,
+      "license": "MIT",
+      "updated": "2026-05-15",
+      "apiKey": "RunComfy",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add prime-skills/runcomfy-agent-skills --skill ai-video-generation" }
+      ]
+    },
+    {
+      "id": "veo-sora",
+      "name": "Video Generation (Veo / Sora)",
+      "repo": "michaelboeding/skills",
+      "stage": "generate",
+      "official": false,
+      "summary": "用 Google Veo 或 OpenAI Sora 生成视频片段，二选一配好 key 即可。",
+      "includes": ["video-generation"],
+      "stars": 30,
+      "license": "MIT",
+      "updated": "2026-10-14",
+      "apiKey": "Google 或 OpenAI",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add michaelboeding/skills --skill video-generation" }
+      ]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs Skills",
+      "repo": "elevenlabs/skills",
+      "stage": "voice",
+      "official": true,
+      "summary": "ElevenLabs 官方 skill 集：文字转语音、语音转文字、配音翻译、音乐、音效、变声、人声分离，覆盖视频里几乎所有声音需求。",
+      "includes": ["text-to-speech", "speech-to-text", "dubbing", "music", "sound-effects", "voice-changer", "voice-isolator"],
+      "stars": 531,
+      "license": "MIT",
+      "updated": "2026-11-02",
+      "apiKey": "ElevenLabs",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add elevenlabs/skills" }
+      ]
+    },
+    {
+      "id": "elevenlabs-tts-lite",
+      "name": "ElevenLabs TTS（轻量版）",
+      "repo": "glebis/claude-skills",
+      "stage": "voice",
+      "official": false,
+      "summary": "社区写的单一 TTS skill，只做一件事：把文案转成配音文件，适合不想装整套官方 skill 的场景。",
+      "includes": ["elevenlabs-tts"],
+      "stars": 406,
+      "license": "MIT",
+      "updated": "2026-11-02",
+      "apiKey": "ElevenLabs",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add glebis/claude-skills --skill elevenlabs-tts" }
+      ]
+    },
+    {
+      "id": "storyboard",
+      "name": "AI Video Storyboard",
+      "repo": "aicontentskills/ai-video-storyboard-skill",
+      "stage": "plan",
+      "official": false,
+      "summary": "把一段需求拆成多镜头分镜，每个镜头附带可直接用于生成模型的提示词，还有画面一致性和后期检查清单。",
+      "includes": ["ai-video-storyboard"],
+      "stars": 69,
+      "license": "未标注",
+      "updated": "2026-04-09",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add aicontentskills/ai-video-storyboard-skill" }
+      ]
+    },
+    {
+      "id": "claude-youtube",
+      "name": "Claude YouTube",
+      "repo": "agricidaniel/claude-youtube",
+      "stage": "plan",
+      "official": false,
+      "summary": "面向 YouTube 创作者：频道诊断、视频 SEO、留存导向的脚本、Shorts 脚本（含画面切换标记）和标题封面建议。",
+      "includes": ["youtube"],
+      "stars": 643,
+      "license": "MIT",
+      "updated": "2026-04-10",
+      "apiKey": "unknown",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add agricidaniel/claude-youtube" }
+      ]
+    },
+    {
+      "id": "video-storyboarding",
+      "name": "Video Storyboarding",
+      "repo": "yonatangross/orchestkit",
+      "stage": "plan",
+      "official": false,
+      "summary": "大型工具包 OrchestKit 里的分镜 skill，用来规划镜头顺序和画面内容。",
+      "includes": ["video-storyboarding"],
+      "stars": 300,
+      "license": "MIT",
+      "updated": "2026-11-03",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add yonatangross/orchestkit --skill video-storyboarding" }
+      ]
+    },
+    {
+      "id": "character-design",
+      "name": "Video Character Design",
+      "repo": "agentara/skills",
+      "stage": "plan",
+      "official": false,
+      "summary": "给 AI 视频写可复用的角色设定文档，让同一个角色在不同镜头、不同模型里保持一致。",
+      "includes": ["video-character-design"],
+      "stars": 622,
+      "license": "MIT",
+      "updated": "2026-09-29",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add agentara/skills --skill video-character-design" }
+      ]
+    },
+    {
+      "id": "ffmpeg-skill",
+      "name": "ffmpeg-skill",
+      "repo": "kajisho5/ffmpeg-skill",
+      "stage": "edit",
+      "official": false,
+      "summary": "本地 FFmpeg 剪辑工具箱，42 个工具：剪切、字幕、画幅重构、响度标准化、按平台导出。先探测再动手、做完再校验，不上云、不要 key。",
+      "includes": ["ffmpeg-skill"],
+      "stars": 4401,
+      "license": "MIT",
+      "updated": "2026-10-31",
+      "apiKey": null,
+      "local": ["FFmpeg", "Node.js"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add kajisho5/ffmpeg-skill" },
+        { "label": "Claude Code 插件", "cmd": "/plugin marketplace add kajisho5/ffmpeg-skill\n/plugin install ffmpeg-skill@ffmpeg-skill" }
+      ],
+      "plugin": { "repo": "kajisho5/ffmpeg-skill", "name": "ffmpeg-skill" }
+    },
+    {
+      "id": "claude-video",
+      "name": "Claude Video",
+      "repo": "agricidaniel/claude-video",
+      "stage": "edit",
+      "official": false,
+      "summary": "一套视频制作命令：剪切拼接、变速、裁切缩放、画中画、绿幕抠像、防抖、转码和加字幕。",
+      "includes": ["claude-video-edit"],
+      "stars": 31,
+      "license": "MIT",
+      "updated": "2026-04-06",
+      "apiKey": "unknown",
+      "local": ["FFmpeg"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add agricidaniel/claude-video" }
+      ]
+    },
+    {
+      "id": "video-processing",
+      "name": "Video Processing & Editing",
+      "repo": "curiositech/some_claude_skills",
+      "stage": "edit",
+      "official": false,
+      "summary": "常用剪辑操作的 skill：裁剪、特效、加字幕、格式转换。",
+      "includes": ["video-processing-editing"],
+      "stars": 261,
+      "license": "MIT",
+      "updated": "2026-10-30",
+      "apiKey": "unknown",
+      "local": ["FFmpeg"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add curiositech/some_claude_skills --skill video-processing-editing" }
+      ]
+    },
+    {
+      "id": "video-edit-mini",
+      "name": "video-edit",
+      "repo": "MomoFadaly/video-edit",
+      "stage": "edit",
+      "official": false,
+      "summary": "最小可用的 FFmpeg skill：剪切、拼接、改尺寸、叠加、提取音频、压缩。代码量小，适合当作自己写 skill 的参考。",
+      "includes": ["video-edit"],
+      "stars": 1,
+      "license": "Apache-2.0",
+      "updated": "2026-05-12",
+      "apiKey": null,
+      "local": ["FFmpeg"],
+      "install": [
+        { "label": "手动安装", "cmd": "git clone https://github.com/MomoFadaly/video-edit ~/.claude/skills/video-edit" }
+      ]
+    },
+    {
+      "id": "whisper-transcription",
+      "name": "Transcription with Whisper",
+      "repo": "madappgang/claude-code",
+      "stage": "caption",
+      "official": false,
+      "summary": "用 Whisper 转写音视频，输出 SRT / VTT / JSON，支持时间轴对齐和说话人区分。",
+      "includes": ["transcription"],
+      "stars": 286,
+      "license": "MIT",
+      "updated": "2026-03-15",
+      "apiKey": null,
+      "local": ["Whisper", "FFmpeg"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add madappgang/claude-code --skill transcription" }
+      ]
+    },
+    {
+      "id": "ffmpeg-captions",
+      "name": "FFmpeg Captions & Subtitles",
+      "repo": "josiahsiegel/claude-plugin-marketplace",
+      "stage": "caption",
+      "official": false,
+      "summary": "字幕的后半程：烧录字幕、调字幕样式、从视频里提取字幕轨，附 Whisper 生成字幕的参考流程。",
+      "includes": ["ffmpeg-captions-subtitles"],
+      "stars": 59,
+      "license": "MIT",
+      "updated": "2026-06-18",
+      "apiKey": null,
+      "local": ["FFmpeg"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add josiahsiegel/claude-plugin-marketplace --skill ffmpeg-captions-subtitles" }
+      ]
+    },
+    {
+      "id": "clawfu-whisper",
+      "name": "Whisper Transcription（ClawFu）",
+      "repo": "guia-matthieu/clawfu-skills",
+      "stage": "caption",
+      "official": false,
+      "summary": "营销 skill 合集 ClawFu 里的转写 skill，用 Whisper 把音视频转成文字和字幕。",
+      "includes": ["whisper-transcription"],
+      "stars": 150,
+      "license": "MIT",
+      "updated": "2026-10-01",
+      "apiKey": "unknown",
+      "local": [],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add guia-matthieu/clawfu-skills --skill whisper-transcription" }
+      ]
+    },
+    {
+      "id": "openmontage",
+      "name": "OpenMontage",
+      "repo": "calesthio/OpenMontage",
+      "stage": "pipeline",
+      "official": true,
+      "summary": "开源的 agent 视频制作系统：用一句话描述视频，agent 负责调研、脚本、素材生成、剪辑和合成。内置 12 条制作流程，有零 key 模式（用公开素材库拼真实画面）。",
+      "includes": ["core", "creative", "pipelines", "meta"],
+      "stars": 75506,
+      "license": "AGPL-3.0",
+      "updated": "2026-10-28",
+      "apiKey": null,
+      "local": ["Python 3.10+", "FFmpeg", "Node.js 18+"],
+      "install": [
+        { "label": "克隆项目", "cmd": "git clone https://github.com/calesthio/OpenMontage\ncd OpenMontage && make setup" }
+      ],
+      "note": "AGPL-3.0 许可证：拿去做商业服务前需要仔细评估。接入付费生成服务时才需要对应的 key。"
+    },
+    {
+      "id": "video-by-reference",
+      "name": "Video by Reference",
+      "repo": "ishuagrawal/skills",
+      "stage": "pipeline",
+      "official": false,
+      "summary": "给一个你喜欢的视频当参考，生成一支风格相近、内容原创、带配乐的动画短片。",
+      "includes": ["video-by-reference"],
+      "stars": 74,
+      "license": "MIT",
+      "updated": "2026-10-19",
+      "apiKey": "unknown",
+      "local": ["FFmpeg", "Chrome"],
+      "install": [
+        { "label": "skills CLI", "cmd": "npx skills add ishuagrawal/skills --skill video-by-reference" }
+      ],
+      "note": "作者建议在 Claude Code 等本地 agent 里用，网页版沙箱可能缺少 FFmpeg 或 Chrome。"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "explainer",
+      "name": "口播讲解视频",
+      "summary": "写脚本、配音、用代码合成画面，最后按平台导出。全程不用打开剪辑软件。",
+      "steps": [
+        { "skill": "claude-youtube", "does": "按留存结构写脚本，标出画面切换点" },
+        { "skill": "elevenlabs", "does": "把脚本转成配音，顺带生成背景音乐" },
+        { "skill": "remotion", "does": "按配音时长排画面、动画和字幕" },
+        { "skill": "ffmpeg-skill", "does": "响度标准化，导出横屏和竖屏两版" }
+      ]
+    },
+    {
+      "id": "promo",
+      "name": "产品宣传短片",
+      "summary": "先定分镜，再逐镜头生成画面，用 HTML 动效包装成片。",
+      "steps": [
+        { "skill": "storyboard", "does": "把需求拆成 6–8 个镜头，并写好每个镜头的提示词" },
+        { "skill": "higgsfield", "does": "逐镜头生成视频素材和产品图" },
+        { "skill": "hyperframes", "does": "加文字动效和转场，合成整片" },
+        { "skill": "ffmpeg-skill", "does": "按抖音、YouTube、小红书的尺寸分别导出" }
+      ]
+    },
+    {
+      "id": "localize",
+      "name": "视频出海本地化",
+      "summary": "把一支中文视频变成多语言版本，配音对口型，字幕烧录进画面。",
+      "steps": [
+        { "skill": "whisper-transcription", "does": "转写原片，得到带时间轴的字幕" },
+        { "skill": "heygen", "does": "翻译并克隆原声配音，对齐口型" },
+        { "skill": "ffmpeg-captions", "does": "把目标语言字幕烧录进视频" }
+      ]
+    }
+  ]
+}
