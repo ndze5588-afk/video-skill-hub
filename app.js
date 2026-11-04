@@ -27,7 +27,6 @@
     `<span><b>${linear.length}</b> 个制作环节</span>`,
     `<span><b>${skills.filter((s) => s.cn).length}</b> 个支持国产模型或剪映</span>`,
     `<span><b>${workflows.length}</b> 套工作流</span>`,
-    `<span>核对于 <b>${esc(data.checkedAt)}</b></span>`,
   ].join("");
   $("#checked").textContent = data.checkedAt;
   $("#install-checked").textContent = data.installCheckedAt || data.checkedAt;
