@@ -76,6 +76,14 @@ code, .mono { font-family: var(--font-mono); }
 .hero-text { display: grid; gap: 14px; max-width: 64ch; }
 .hero h1 { font-size: clamp(32px, 5.4vw, 60px); font-weight: 800; line-height: 1.18; letter-spacing: 0; }
 .hero p { margin: 0; font-size: 17px; color: var(--muted); }
+/* Wide screens: headline on the left, intro and numbers on the right, so the hero spans the row. */
+@media (min-width: 900px) {
+  .hero-text { max-width: none; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); column-gap: 56px; align-items: end; }
+  .hero-text .eyebrow { grid-column: 1 / -1; }
+  .hero-text h1 { grid-row: 2 / span 2; }
+  .hero-text p, .hero-text .stats { grid-column: 2; }
+  .hero-text .stats { padding-bottom: 10px; }
+}
 .stats { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .stats b { color: var(--ink); font-weight: 500; }
 
