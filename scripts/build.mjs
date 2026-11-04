@@ -3,13 +3,20 @@
 import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const data = JSON.parse(await readFile(join(root, "data/skills.json"), "utf8"));
 
 // index.html is written as a page fragment (head tags + body content) so the same file can be
 // published as a Claude Artifact; wrap it in a full document for normal static hosting.
-const fragment = await readFile(join(root, "index.html"), "utf8");
+const appJs = await readFile(join(root, "app.js"), "utf8");
+// Version the script URL by content so browsers pick up a new app.js after each deploy.
+const appVersion = createHash("sha256").update(appJs).digest("hex").slice(0, 8);
+const fragment = (await readFile(join(root, "index.html"), "utf8")).replace(
+  '<script src="app.js"></script>',
+  `<script src="app.js?v=${appVersion}"></script>`
+);
 const page = `<!doctype html>
 <html lang="zh-CN">
 <head>

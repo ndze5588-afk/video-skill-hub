@@ -5,7 +5,8 @@
 
   let data;
   try {
-    data = await fetch("data/skills.json").then((r) => r.json());
+    // Revalidate on every load so a data update is never hidden behind a stale cache.
+    data = await fetch("data/skills.json", { cache: "no-cache" }).then((r) => r.json());
   } catch (err) {
     $("#grid").innerHTML = `<div class="empty">没能读取 data/skills.json。请通过本地服务器打开页面（见 README），不要直接双击 HTML 文件。</div>`;
     return;
@@ -14,13 +15,17 @@
   const { stages, skills, workflows } = data;
   const byId = Object.fromEntries(skills.map((s) => [s.id, s]));
   const stageById = Object.fromEntries(stages.map((s) => [s.id, s]));
-  const state = { q: "", stage: null, official: false, nokey: false, plugin: false };
+  const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false };
+  // A skill counts as plugin-installable when any install route is a Claude Code plugin,
+  // even if only s.plugin entries can go into this hub's own marketplace.
+  const hasPlugin = (s) => s.install.some((i) => i.label === "Claude Code 插件");
 
   // Stats
   const linear = stages.filter((s) => s.id !== "pipeline");
   $("#stats").innerHTML = [
     `<span><b>${skills.length}</b> 个 skill 仓库</span>`,
     `<span><b>${linear.length}</b> 个制作环节</span>`,
+    `<span><b>${skills.filter((s) => s.cn).length}</b> 个支持国产模型或剪映</span>`,
     `<span><b>${workflows.length}</b> 套工作流</span>`,
     `<span>核对于 <b>${esc(data.checkedAt)}</b></span>`,
   ].join("");
@@ -69,8 +74,8 @@
     let card = document.getElementById(`skill-${id}`);
     if (!card) {
       state.q = ""; $("#q").value = "";
-      state.official = state.nokey = state.plugin = false;
-      ["#f-official", "#f-nokey", "#f-plugin"].forEach((s) => ($(s).checked = false));
+      state.official = state.nokey = state.plugin = state.cn = false;
+      ["#f-official", "#f-nokey", "#f-plugin", "#f-cn"].forEach((s) => ($(s).checked = false));
       setStage(null);
       card = document.getElementById(`skill-${id}`);
     }
@@ -100,15 +105,18 @@
 
   // Filters
   $("#q").addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
-  [["#f-official", "official"], ["#f-nokey", "nokey"], ["#f-plugin", "plugin"]].forEach(([sel, key]) =>
+  [["#f-official", "official"], ["#f-nokey", "nokey"], ["#f-plugin", "plugin"], ["#f-cn", "cn"]].forEach(([sel, key]) =>
     $(sel).addEventListener("change", (e) => { state[key] = e.target.checked; render(); })
   );
 
   const cmdBlock = (label, cmd) =>
     `<div class="cmd"><span class="lbl">${esc(label)}</span><pre>${esc(cmd)}</pre><button class="copy" data-copy="${esc(cmd)}" aria-label="复制${esc(label)}命令">复制</button></div>`;
 
-  const keyText = (s) =>
-    s.apiKey === null ? "不需要" : s.apiKey === "unknown" ? `<span class="unknown">未核实</span>` : `需要 ${esc(s.apiKey)}`;
+  const keyText = (s) => {
+    if (s.apiKey === "unknown") return `<span class="unknown">未核实</span>`;
+    const base = s.apiKey === null ? "不需要" : `需要 ${esc(s.apiKey)}`;
+    return s.keyNote ? `${base}<span class="key-note">（${esc(s.keyNote)}）</span>` : base;
+  };
 
   function cardHtml(s) {
     const st = stageById[s.stage];
@@ -120,7 +128,7 @@
         </div>
         <span class="stage-tag">${esc(st.name)}</span>
       </div>
-      ${s.official || s.plugin ? `<div class="badges">${s.official ? `<span class="badge official" title="由工具或平台本身的团队维护">官方出品</span>` : ""}${s.plugin ? `<span class="badge">可插件安装</span>` : ""}</div>` : ""}
+      ${s.official || s.cn || hasPlugin(s) ? `<div class="badges">${s.official ? `<span class="badge official" title="由工具或平台本身的团队维护">官方出品</span>` : ""}${s.cn ? `<span class="badge cn" title="支持国产视频模型或剪映">国产模型 / 剪映</span>` : ""}${hasPlugin(s) ? `<span class="badge">可插件安装</span>` : ""}</div>` : ""}
       <p class="summary">${esc(s.summary)}</p>
       ${s.includes.length > 1 ? `<div class="includes" aria-label="包含的 skill">${s.includes.map((i) => `<code>${esc(i)}</code>`).join("")}</div>` : ""}
       <dl class="meta">
@@ -137,9 +145,10 @@
     if (state.stage && s.stage !== state.stage) return false;
     if (state.official && !s.official) return false;
     if (state.nokey && s.apiKey !== null) return false;
-    if (state.plugin && !s.plugin) return false;
+    if (state.plugin && !hasPlugin(s)) return false;
+    if (state.cn && !s.cn) return false;
     if (state.q) {
-      const hay = [s.name, s.repo, s.summary, stageById[s.stage].name, ...s.includes, ...s.local, s.apiKey || ""].join(" ").toLowerCase();
+      const hay = [s.name, s.repo, s.summary, stageById[s.stage].name, ...s.includes, ...s.local, s.apiKey || "", s.keyNote || "", s.note || ""].join(" ").toLowerCase();
       if (!hay.includes(state.q)) return false;
     }
     return true;

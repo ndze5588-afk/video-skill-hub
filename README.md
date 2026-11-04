@@ -45,6 +45,8 @@ python3 -m http.server 8000 -d dist
 | `stage` | `plan` / `generate` / `voice` / `compose` / `edit` / `caption` / `pipeline` |
 | `official` | 是否由工具或平台本身的团队维护 |
 | `apiKey` | `null` 表示不需要；`"unknown"` 表示未核实；否则写服务名 |
+| `keyNote` | 可选。部分功能才需要 key 时写在这里，比如「生成封面需要 Gemini」 |
+| `cn` | 是否支持国产视频模型（可灵、即梦、海螺、通义万相等）或剪映 |
 | `local` | 需要本地安装的软件 |
 | `install` | 安装命令，可以有多种方式 |
 | `plugin` | 仅当上游仓库带 `.claude-plugin/plugin.json` 时填写，会进入插件市场 |
