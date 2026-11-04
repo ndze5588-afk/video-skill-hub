@@ -1,0 +1,19 @@
+Skill 剪辑台
+Copyright (c) 2026 丁泽恩
+
+本仓库包含两类内容，分别适用不同的授权。
+
+一、整理的数据与文案
+包括 data/skills.json 中的分类、简介、依赖说明、工作流，以及网站上的文字内容。
+采用 知识共享 署名-非商业性使用 4.0 国际许可协议（CC BY-NC 4.0）：
+https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans
+
+你可以转载、引用和改编，但需要：
+  - 注明出处「Skill 剪辑台」并附上原站链接；
+  - 不得用于商业目的。商业使用请先联系作者取得授权。
+
+二、源代码
+包括 index.html、app.js、scripts/ 和 .github/ 下的文件。
+保留所有权利（All rights reserved）。未经作者书面许可，不得复制、修改或分发。
+
+收录的各个 skill 归其原作者所有，适用其各自仓库中的许可证。

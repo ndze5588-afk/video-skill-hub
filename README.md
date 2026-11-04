@@ -1,17 +1,27 @@
 # Skill 剪辑台
 
-按制作流程整理的 AI 视频 Agent Skills 目录。网站和 Claude Code 插件市场共用同一份数据：`data/skills.json`。
+**把散落各处的 AI 视频 skill，排成一条时间线。**
 
-## 目录结构
+Skill 剪辑台按视频的制作环节（策划脚本 → 素材生成 → 配音音频 → 合成动画 → 剪辑处理 → 字幕本地化）整理 Claude Code、Cursor、Codex 等 agent 能用的视频 skill。每一条都写明：
+
+- 要不要 API key，哪些功能才需要
+- 本地要装什么软件
+- 开源许可证，能不能商用
+- 可以直接复制的安装命令（每周对照上游仓库自动核对）
+
+特别收录了支持**国产视频模型**（可灵、即梦 Seedance、海螺 MiniMax、通义万相）和**剪映**的 skill，并提供几套串好的工作流模板。
+
+## 仓库结构
 
 ```
 data/skills.json               唯一的数据源：环节、skill、工作流
 index.html                     页面（片段格式，可直接发布为 Claude Artifact）
 app.js                         渲染、筛选、复制命令
-scripts/build.mjs              生成 dist/（可部署的静态站）和 .claude-plugin/marketplace.json
+scripts/build.mjs              生成 dist/（网站）和 dist-marketplace/（公开的插件市场）
 scripts/refresh.mjs            从 GitHub 拉取最新星数、许可证、更新日期
 scripts/check-install.mjs      对照上游仓库核对每条安装命令（只读取，不下载、不运行）
-.github/workflows/refresh.yml  每周一自动刷新数据并提交
+scripts/publish-marketplace.sh 把 dist-marketplace/ 推送到公开的插件市场仓库
+.github/workflows/refresh.yml  每周一自动刷新数据、核对命令并提交
 ```
 
 ## 本地预览
@@ -25,15 +35,26 @@ python3 -m http.server 8000 -d dist
 
 ## 部署
 
-1. 把 `data/skills.json` 里的 `hub.repo` 改成你的 `用户名/video-skill-hub`
-2. 推到 GitHub，运行一次 `node scripts/build.mjs`，提交生成的 `.claude-plugin/marketplace.json`
-3. 用 Vercel、Netlify 或 GitHub Pages 托管 `dist/` 目录
+网站托管在 Cloudflare Pages，绑定本仓库，推送后自动构建：
 
-部署后，别人就能在 Claude Code 里运行：
+| 设置 | 值 |
+| --- | --- |
+| Framework preset | None |
+| Build command | `node scripts/build.mjs` |
+| Build output directory | `dist` |
+| 环境变量 | `NODE_VERSION` = `20` |
 
-```
-/plugin marketplace add 用户名/video-skill-hub
-/plugin install remotion@video-skill-hub
+自定义域名在 Pages 项目的 Custom domains 里添加。
+
+## 插件市场
+
+本仓库是私有的。Claude Code 用户添加插件市场时需要访问公开仓库，所以插件市场单独放在 `data/skills.json` 里 `hub.repo` 指向的公开仓库，只包含生成出来的 `marketplace.json`。
+
+数据有变化时运行：
+
+```bash
+node scripts/build.mjs
+scripts/publish-marketplace.sh
 ```
 
 ## 收录一个新 skill
@@ -45,17 +66,17 @@ python3 -m http.server 8000 -d dist
 | `id` | 唯一短名，工作流里用它引用 |
 | `stage` | `plan` / `generate` / `voice` / `compose` / `edit` / `caption` / `pipeline` |
 | `official` | 是否由工具或平台本身的团队维护 |
+| `cn` | 是否支持国产视频模型或剪映 |
 | `apiKey` | `null` 表示不需要；`"unknown"` 表示未核实；否则写服务名 |
 | `keyNote` | 可选。部分功能才需要 key 时写在这里，比如「生成封面需要 Gemini」 |
-| `cn` | 是否支持国产视频模型（可灵、即梦、海螺、通义万相等）或剪映 |
 | `local` | 需要本地安装的软件 |
 | `install` | 安装命令，可以有多种方式 |
 | `plugin` | 仅当上游仓库带 `.claude-plugin/plugin.json` 时填写，会进入插件市场 |
 
-星数、许可证、更新日期可以先随便填，运行 `node scripts/refresh.mjs` 会自动更新。
+星数、许可证、更新日期可以先随便填，运行 `node scripts/refresh.mjs` 会自动更新；再运行 `node scripts/check-install.mjs` 确认安装命令无误。
 
-## 收录标准
+收录标准：仓库公开、含 `SKILL.md`、跟视频制作直接相关、上架前人工读过 SKILL.md 和附带脚本。
 
-- 仓库公开，含 `SKILL.md`
-- 跟视频制作直接相关
-- 上架前人工读过 SKILL.md 和附带脚本
+## 授权
+
+数据与文案采用 CC BY-NC 4.0（转载请注明出处，禁止商用）；源代码保留所有权利。详见 [LICENSE](LICENSE)。

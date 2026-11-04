@@ -182,10 +182,15 @@
     })
     .join("");
 
-  // Marketplace commands
+  // Marketplace commands; hidden until hub.repo names a real public repo.
   const plugins = skills.filter((s) => s.plugin);
   const hub = data.hub;
-  $("#market-cmds").innerHTML =
-    cmdBlock("1. 添加市场（仓库发布到 GitHub 后可用）", `/plugin marketplace add ${hub.repo}`) +
-    cmdBlock("2. 按需安装", plugins.map((s) => `/plugin install ${s.plugin.name}@${hub.name}`).join("\n"));
+  if (hub.repo.includes("<")) {
+    $("#market").hidden = true;
+    document.querySelector('.top nav a[href="#market"]').hidden = true;
+  } else {
+    $("#market-cmds").innerHTML =
+      cmdBlock("1. 添加市场", `/plugin marketplace add ${hub.repo}`) +
+      cmdBlock("2. 按需安装", plugins.map((s) => `/plugin install ${s.plugin.name}@${hub.name}`).join("\n"));
+  }
 })();

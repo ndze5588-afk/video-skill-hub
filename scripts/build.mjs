@@ -1,4 +1,4 @@
-// Builds the deployable site into dist/ and regenerates the Claude Code plugin marketplace.
+// Builds the deployable site into dist/ and the public plugin marketplace into dist-marketplace/.
 // Usage: node scripts/build.mjs
 import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -34,7 +34,8 @@ await writeFile(join(root, "dist/index.html"), page);
 await copyFile(join(root, "app.js"), join(root, "dist/app.js"));
 await copyFile(join(root, "data/skills.json"), join(root, "dist/data/skills.json"));
 
-// Only skills whose upstream repo ships .claude-plugin/plugin.json can be listed here.
+// The marketplace lives in its own public repo (hub.repo) so this repo can stay private.
+// Only skills whose upstream repo ships .claude-plugin/plugin.json can be listed there.
 const [owner] = data.hub.repo.split("/");
 const marketplace = {
   name: data.hub.name,
@@ -49,7 +50,27 @@ const marketplace = {
       category: s.stage,
     })),
 };
-await mkdir(join(root, ".claude-plugin"), { recursive: true });
-await writeFile(join(root, ".claude-plugin/marketplace.json"), JSON.stringify(marketplace, null, 2) + "\n");
+const site = data.hub.site || "https://claude.ai/artifact/CfNyZ33MiZLQaXryzgZYZ1";
+const marketReadme = `# Skill 剪辑台 · 插件市场
 
-console.log(`dist/ built with ${data.skills.length} skills; marketplace lists ${marketplace.plugins.length} plugins.`);
+[Skill 剪辑台](${site}) 的 Claude Code 插件市场：按制作流程整理的 AI 视频 skill 中，已打包成插件的那些。
+
+\`\`\`
+/plugin marketplace add ${data.hub.repo}
+${marketplace.plugins.map((p) => `/plugin install ${p.name}@${data.hub.name}`).join("\n")}
+\`\`\`
+
+| 插件 | 来源 | 说明 |
+| --- | --- | --- |
+${marketplace.plugins.map((p) => `| \`${p.name}\` | [${p.source.repo}](https://github.com/${p.source.repo}) | ${p.description} |`).join("\n")}
+
+全部 ${data.skills.length} 个视频 skill（含未打包成插件的）、依赖和 API key 说明见 ${site} 。
+
+本仓库由 Skill 剪辑台自动生成。插件归各自作者所有，适用其仓库中的许可证；本仓库中的整理内容采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans)，转载请注明出处。
+`;
+const marketDir = join(root, "dist-marketplace");
+await mkdir(join(marketDir, ".claude-plugin"), { recursive: true });
+await writeFile(join(marketDir, ".claude-plugin/marketplace.json"), JSON.stringify(marketplace, null, 2) + "\n");
+await writeFile(join(marketDir, "README.md"), marketReadme);
+
+console.log(`dist/ built with ${data.skills.length} skills; dist-marketplace/ lists ${marketplace.plugins.length} plugins.`);

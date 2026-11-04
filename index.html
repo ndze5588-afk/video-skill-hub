@@ -1,6 +1,10 @@
 <title>Skill 剪辑台</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="按制作流程整理的 AI 视频 Agent Skills 目录：策划、生成、配音、合成、剪辑、字幕。">
+<meta name="description" content="按制作环节整理的 AI 视频 skill 目录：可灵、即梦、海螺、剪映、Remotion、ElevenLabs 等，标清依赖、API key 和安装命令。">
+<meta property="og:title" content="Skill 剪辑台：AI 视频 skill 目录">
+<meta property="og:description" content="散落各处的视频 skill，排成一条时间线。标清依赖、API key 和安装命令，支持国产模型和剪映。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#fbfbfa">
 <style>
 /* Layout: a quiet product page. Centered hero, the stage timeline as the one visual, then the skill directory,
    workflows and install band, all on one neutral palette with stage colors used only as small dots and tints. */
@@ -215,6 +219,8 @@ details.more summary:hover { color: var(--ink); }
 
 footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; font-size: 13px; color: var(--faint); }
 footer p { margin: 0; max-width: 72ch; }
+footer a { text-decoration: underline; text-underline-offset: 2px; }
+footer a:hover { color: var(--ink); }
 
 @media (max-width: 860px) {
   .flow, .market { grid-template-columns: 1fr; }
@@ -292,15 +298,15 @@ footer p { margin: 0; max-width: 72ch; }
     <div class="market">
       <div>
         <h2 id="market-title">在 Claude Code 里一次装好</h2>
-        <p>这个网站的仓库本身就是一个插件市场。添加一次，就能按名字安装已打包成插件的 skill；其余的用卡片上的 <code>npx skills add</code> 安装。</p>
+        <p>添加 Skill 剪辑台的插件市场，就能按名字安装已打包成插件的 skill；其余的用卡片上的 <code>npx skills add</code> 安装。</p>
       </div>
       <div class="install" id="market-cmds"></div>
     </div>
   </section>
 
   <footer>
-    <p>收录的都是第三方仓库，安装前请先读一遍 SKILL.md 和附带脚本。</p>
-    <p>推荐 skill：在 <span class="mono">data/skills.json</span> 加一条并提交 PR。</p>
+    <p>收录的 skill 归各自作者所有，安装前请先读一遍 SKILL.md 和附带脚本。</p>
+    <p>© 2026 Skill 剪辑台 · 整理内容采用 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC 4.0</a>，转载请注明出处</p>
   </footer>
 </div>
 
