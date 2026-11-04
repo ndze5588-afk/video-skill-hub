@@ -8,7 +8,7 @@ case "$repo" in *"<"*) echo "Set hub.repo in data/skills.json first." >&2; exit 
 
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
-git clone --quiet "ssh://git@ssh.github.com:443/$repo.git" "$work"  # port 443: port 22 is blocked on some networks
+git clone --quiet "git@github.com:$repo.git" "$work"
 # Replace everything except .git with the freshly built marketplace.
 find "$work" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 cp -R "$root/dist-marketplace/." "$work/"
