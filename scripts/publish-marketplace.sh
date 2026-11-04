@@ -19,7 +19,9 @@ git add -A
 if git diff --cached --quiet; then
   echo "Marketplace already up to date."
 else
-  git commit --quiet -m "Update marketplace"
+  # The temporary clone has no identity of its own; commit as this repo's configured author.
+  git -c user.name="$(git -C "$root" config user.name)" -c user.email="$(git -C "$root" config user.email)" \
+    commit --quiet -m "Update marketplace"
   git push --quiet origin HEAD:main
   echo "Pushed marketplace to $repo."
 fi
