@@ -1,6 +1,6 @@
 // Builds the deployable site into dist/ and the public plugin marketplace into dist-marketplace/.
 // Usage: node scripts/build.mjs
-import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, copyFile, cp } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
@@ -17,11 +17,15 @@ const fragment = (await readFile(join(root, "index.html"), "utf8")).replace(
   '<script src="app.js"></script>',
   `<script src="app.js?v=${appVersion}"></script>`
 );
+const site = data.hub.site || "https://claude.ai/artifact/CfNyZ33MiZLQaXryzgZYZ1";
 const page = `<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="${site}/">
+<meta property="og:url" content="${site}/">
 </head>
 <body>
 ${fragment}
@@ -33,6 +37,13 @@ await mkdir(join(root, "dist/data"), { recursive: true });
 await writeFile(join(root, "dist/index.html"), page);
 await copyFile(join(root, "app.js"), join(root, "dist/app.js"));
 await copyFile(join(root, "data/skills.json"), join(root, "dist/data/skills.json"));
+// Real files for crawlers; without them Cloudflare Pages answers these paths with the homepage.
+await cp(join(root, "public"), join(root, "dist"), { recursive: true });
+await writeFile(join(root, "dist/robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${site}/sitemap.xml\n`);
+await writeFile(
+  join(root, "dist/sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${site}/</loc><lastmod>${data.installCheckedAt || data.checkedAt}</lastmod></url>\n</urlset>\n`
+);
 
 // The marketplace lives in its own public repo (hub.repo) so this repo can stay private.
 // Only skills whose upstream repo ships .claude-plugin/plugin.json can be listed there.
@@ -50,7 +61,6 @@ const marketplace = {
       category: s.stage,
     })),
 };
-const site = data.hub.site || "https://claude.ai/artifact/CfNyZ33MiZLQaXryzgZYZ1";
 const marketReadme = `# Skill 剪辑台 · 插件市场
 
 [Skill 剪辑台](${site}) 的 Claude Code 插件市场：按制作流程整理的 AI 视频 skill 中，已打包成插件的那些。

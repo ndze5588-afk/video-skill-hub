@@ -2,6 +2,8 @@
 
 **把散落各处的 AI 视频 skill，排成一条时间线。**
 
+网站：https://video-skill-hub.pages.dev · 插件市场：[ndze5588-afk/video-skill-hub-plugins](https://github.com/ndze5588-afk/video-skill-hub-plugins)
+
 Skill 剪辑台按视频的制作环节（策划脚本 → 素材生成 → 配音音频 → 合成动画 → 剪辑处理 → 字幕本地化）整理 Claude Code、Cursor、Codex 等 agent 能用的视频 skill。每一条都写明：
 
 - 要不要 API key，哪些功能才需要

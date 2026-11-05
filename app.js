@@ -128,7 +128,7 @@
     return `<article class="card" id="skill-${esc(s.id)}" style="${clipVar(s.stage)}">
       <div class="card-top"><span class="stage-tag">${esc(st.name)}</span>${badges ? `<div class="badges">${badges}</div>` : ""}</div>
       <div>
-        <h3>${esc(s.name)}</h3>
+        <h3><a href="#skill-${esc(s.id)}" class="permalink" title="这个 skill 的链接">${esc(s.name)}</a></h3>
         <a class="repo" href="https://github.com/${esc(s.repo)}" target="_blank" rel="noopener">${esc(s.repo)}</a>
       </div>
       <p class="summary">${esc(s.summary)}</p>
@@ -165,6 +165,13 @@
   }
   render();
 
+  // A link like #skill-capcut-cli opens that card, even after filters or a search hid it.
+  const openFromHash = () => {
+    const id = decodeURIComponent(location.hash).replace(/^#skill-/, "");
+    if (location.hash.startsWith("#skill-") && byId[id]) jumpTo(id);
+  };
+  window.addEventListener("hashchange", openFromHash);
+
   // Workflows
   $("#flow-list").innerHTML = workflows
     .map((w) => {
@@ -193,4 +200,7 @@
       cmdBlock("1. 添加市场", `/plugin marketplace add ${hub.repo}`) +
       cmdBlock("2. 按需安装", plugins.map((s) => `/plugin install ${s.plugin.name}@${hub.name}`).join("\n"));
   }
+
+  // Run last, once every section above has its final height.
+  openFromHash();
 })();
