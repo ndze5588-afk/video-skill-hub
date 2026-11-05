@@ -1,6 +1,6 @@
 // Checks that every install command in data/skills.json points at something that exists,
 // by reading the upstream repos on GitHub. Nothing from those repos is downloaded or run.
-// Usage: GITHUB_TOKEN=xxx node scripts/check-install.mjs   (token optional; one API call per repo)
+// Usage: GITHUB_TOKEN=xxx node scripts/check-install.mjs [skill-id ...]   (token optional; one API call per repo)
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -67,8 +67,10 @@ async function check(cmd) {
   return problems;
 }
 
+// Optional skill ids limit the check to new entries, which saves GitHub API calls.
+const only = new Set(process.argv.slice(2));
 let failed = 0;
-for (const s of data.skills) {
+for (const s of data.skills.filter((s) => !only.size || only.has(s.id))) {
   for (const { label, cmd } of s.install) {
     let problems;
     try {
@@ -84,7 +86,11 @@ if (failed) {
   console.log(`\n${failed} install command(s) need fixing.`);
   process.exit(1);
 }
-// Record the date so the site can say when the commands were last confirmed.
+if (only.size) {
+  console.log("\nThe listed install commands check out.");
+  process.exit(0);
+}
+// Record the date so the site can say when every command was last confirmed.
 data.installCheckedAt = new Date().toISOString().slice(0, 10);
 await writeFile(join(root, "data/skills.json"), JSON.stringify(data, null, 2) + "\n");
 console.log("\nAll install commands check out.");

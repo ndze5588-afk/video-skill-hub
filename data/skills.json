@@ -855,6 +855,252 @@
         }
       ],
       "note": "作者实测一条完整视频约 1.3 元。要把字幕烧进画面，需要带 libass 的 FFmpeg（macOS 用 brew install ffmpeg-full）。"
+    },
+    {
+      "id": "video-use",
+      "name": "video-use",
+      "repo": "browser-use/video-use",
+      "stage": "edit",
+      "official": false,
+      "cn": false,
+      "summary": "对话式剪辑：把原始素材放进一个文件夹，告诉 agent 想剪成什么样，它先转写，再挑片段、剪切拼接、自动调色并导出成片。附带一个 Manim 动画 skill。",
+      "includes": [
+        "video-use",
+        "manim-video"
+      ],
+      "stars": 30559,
+      "license": "MIT",
+      "updated": "2026-10-08",
+      "apiKey": "ElevenLabs（用于转写）",
+      "local": [
+        "Python（uv）",
+        "FFmpeg",
+        "可选 yt-dlp"
+      ],
+      "install": [
+        {
+          "label": "手动安装",
+          "cmd": "git clone https://github.com/browser-use/video-use ~/Developer/video-use\ncd ~/Developer/video-use && uv sync\nln -sfn ~/Developer/video-use ~/.claude/skills/video-use"
+        }
+      ],
+      "note": "也可以直接让 agent 读仓库里的 install.md 自动安装，它会在需要时向你要 ElevenLabs key。"
+    },
+    {
+      "id": "video-toolkit",
+      "name": "Claude Code Video Toolkit",
+      "repo": "digitalsamba/claude-code-video-toolkit",
+      "stage": "pipeline",
+      "official": false,
+      "cn": false,
+      "summary": "AI 视频制作工作台：告诉 Claude Code 想要什么视频，它写脚本、生成配音、配乐和画面，再用 Remotion 合成并渲染成 MP4。内置 14 个 skill，示例项目不需要 API key 就能出片。",
+      "includes": [
+        "elevenlabs",
+        "ffmpeg",
+        "moviepy",
+        "ltx2",
+        "acestep",
+        "ideogram4",
+        "playwright-recording",
+        "frontend-design"
+      ],
+      "stars": 2443,
+      "license": "MIT",
+      "updated": "2026-11-04",
+      "apiKey": null,
+      "keyNote": "配音、AI 画面等功能需要对应服务的 key，部分模型需要云 GPU",
+      "local": [
+        "Node.js 22+",
+        "Python（uv）",
+        "FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "克隆项目",
+          "cmd": "git clone https://github.com/digitalsamba/claude-code-video-toolkit.git\ncd claude-code-video-toolkit && uv sync"
+        }
+      ]
+    },
+    {
+      "id": "youtube-clipper",
+      "name": "YouTube Clipper",
+      "repo": "op7418/Youtube-clipper-skill",
+      "stage": "caption",
+      "official": false,
+      "cn": false,
+      "summary": "下载 YouTube 视频，按话题自动分章节、精准切片，生成中英双语字幕并烧录进画面，还会写好发社交平台用的文案。",
+      "includes": [
+        "youtube-clipper"
+      ],
+      "stars": 2285,
+      "license": "MIT",
+      "updated": "2026-01-22",
+      "apiKey": "unknown",
+      "local": [
+        "Python 3.8+",
+        "yt-dlp",
+        "FFmpeg（需 libass）"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add https://github.com/op7418/Youtube-clipper-skill"
+        }
+      ],
+      "note": "烧录字幕需要带 libass 的 FFmpeg，macOS 上用 brew install ffmpeg-full。"
+    },
+    {
+      "id": "remotion-motion",
+      "name": "Claude Remotion Skill",
+      "repo": "haidrrrry/claude-remotion-skill",
+      "stage": "compose",
+      "official": false,
+      "cn": false,
+      "summary": "社区版 Remotion 动效 skill：一句话做动态图形、B-roll、字幕和音效。渲染完会用 FFmpeg 抽帧自检，有问题先修再交付。",
+      "includes": [
+        "remotion-motion-graphics"
+      ],
+      "stars": 832,
+      "license": "MIT",
+      "updated": "2026-08-12",
+      "apiKey": null,
+      "local": [
+        "Node.js",
+        "FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add haidrrrry/claude-remotion-skill"
+        }
+      ]
+    },
+    {
+      "id": "motion-design",
+      "name": "Claude Motion Design",
+      "repo": "howseen-ai/claude-motion-design",
+      "stage": "compose",
+      "official": false,
+      "cn": false,
+      "summary": "纯代码做动效视频：用 HTML 写画面，Playwright 逐帧渲染，FFmpeg 合成，配乐和音效自动对齐。不需要 After Effects、Remotion 许可证或剪辑软件。",
+      "includes": [
+        "motion-design"
+      ],
+      "stars": 769,
+      "license": "MIT",
+      "updated": "2026-10-04",
+      "apiKey": null,
+      "local": [
+        "Python",
+        "Chromium（Playwright）",
+        "FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add howseen-ai/claude-motion-design"
+        }
+      ]
+    },
+    {
+      "id": "manim-skill",
+      "name": "Manim Skill",
+      "repo": "Yusuke710/manim-skill",
+      "stage": "compose",
+      "official": false,
+      "cn": false,
+      "summary": "做 3Blue1Brown 风格的数学和知识讲解动画：写旁白，本地生成配音，写 Manim 代码，渲染，再逐轮改进。配音用本地 Kokoro 模型，不需要 key。",
+      "includes": [
+        "manim-skill"
+      ],
+      "stars": 193,
+      "license": "MIT",
+      "updated": "2026-10-07",
+      "apiKey": null,
+      "local": [
+        "Python",
+        "Manim",
+        "LaTeX（MacTeX）",
+        "FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add Yusuke710/manim-skill"
+        },
+        {
+          "label": "Claude Code 插件",
+          "cmd": "/plugin marketplace add Yusuke710/manim-skill\n/plugin install manim-skill@manim-skill"
+        }
+      ],
+      "plugin": {
+        "repo": "Yusuke710/manim-skill",
+        "name": "manim-skill"
+      }
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate Skills",
+      "repo": "replicate/skills",
+      "stage": "generate",
+      "official": true,
+      "cn": false,
+      "summary": "Replicate 官方 skill：查找、比较和运行模型。其中 prompt-videos 专讲视频生成和视频编辑模型的提示词技巧。",
+      "includes": [
+        "prompt-videos",
+        "prompt-images",
+        "find-models",
+        "compare-models",
+        "run-models",
+        "build-models",
+        "publish-models"
+      ],
+      "stars": 147,
+      "license": "Apache-2.0",
+      "updated": "2026-06-04",
+      "apiKey": "Replicate",
+      "local": [],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add replicate/skills"
+        },
+        {
+          "label": "Claude Code 插件",
+          "cmd": "/plugin marketplace add replicate/skills\n/plugin install prompt-videos@replicate"
+        }
+      ]
+    },
+    {
+      "id": "fal-skills",
+      "name": "fal Skills",
+      "repo": "fal-ai-community/skills",
+      "stage": "generate",
+      "official": false,
+      "cn": true,
+      "summary": "fal.ai 社区维护的 skill 集：模型目录、提示词写法，以及电影感镜头、广告、UGC 口播短视频、对口型等场景配方，覆盖可灵 v3 等视频模型。",
+      "includes": [
+        "fal-models-catalog",
+        "fal-recipes",
+        "fal-prompting",
+        "cinematography",
+        "commercial",
+        "ugc",
+        "character-design"
+      ],
+      "stars": 260,
+      "license": "未标注",
+      "updated": "2026-10-23",
+      "apiKey": "fal",
+      "local": [
+        "genmedia CLI"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add fal-ai-community/skills"
+        }
+      ],
+      "note": "需要先安装 fal 的 genmedia 命令行并运行 genmedia setup。可灵等国产模型是通过 fal 平台调用的。"
     }
   ],
   "workflows": [
@@ -943,6 +1189,29 @@
         {
           "skill": "capcut-cli",
           "does": "生成剪映草稿，加字幕、调节奏，再到剪映里精修"
+        }
+      ]
+    },
+    {
+      "id": "explainer-anim",
+      "name": "知识讲解动画",
+      "summary": "把一个知识点做成 3Blue1Brown 风格的讲解短片，再切成竖屏发短视频平台。",
+      "steps": [
+        {
+          "skill": "storyboard",
+          "does": "把知识点拆成几个镜头，写好每段旁白"
+        },
+        {
+          "skill": "manim-skill",
+          "does": "写 Manim 代码做公式和图形动画，本地生成配音"
+        },
+        {
+          "skill": "ffmpeg-captions",
+          "does": "给成片加字幕"
+        },
+        {
+          "skill": "ffmpeg-skill",
+          "does": "导出横屏和 9:16 竖屏两个版本"
         }
       ]
     }
