@@ -1199,7 +1199,7 @@
         "seedance-copyright",
         "seedance-troubleshoot"
       ],
-      "stars": 0,
+      "stars": 8000,
       "license": "MIT",
       "updated": "2026-09-27",
       "apiKey": null,
@@ -1350,7 +1350,7 @@
       "includes": [
         "autoclip"
       ],
-      "stars": 9900,
+      "stars": 9200,
       "license": "MIT",
       "updated": "2026-11-03",
       "apiKey": "大模型 API（兼容 OpenAI 接口即可）",
