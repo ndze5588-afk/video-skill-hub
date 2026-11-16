@@ -1101,6 +1101,270 @@
         }
       ],
       "note": "需要先安装 fal 的 genmedia 命令行并运行 genmedia setup。可灵等国产模型是通过 fal 平台调用的。"
+    },
+    {
+      "id": "kling-cli",
+      "name": "可灵 AI 官方 Skill",
+      "repo": "klingai-tech/skills",
+      "stage": "generate",
+      "official": true,
+      "summary": "可灵官方出品，教 agent 用可灵 CLI 出图出视频：文生/图生视频、全能参考、动作控制，还能建可复用的主体（Element）、查灵感值余额。",
+      "includes": [
+        "kling-cli"
+      ],
+      "stars": 0,
+      "license": "见仓库",
+      "updated": "2026-11-13",
+      "apiKey": "可灵账号",
+      "keyNote": "用可灵账号登录授权，生成会消耗账号里的灵感值",
+      "local": [
+        "Node.js 18+",
+        "可灵 CLI"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add klingai-tech/skills"
+        }
+      ],
+      "note": "另外要装可灵 CLI：国内站账号用 npm i -g @klingai/cli-cn，海外站账号用 npm i -g @klingai/cli-global，装错区域会登录失败。",
+      "cn": true
+    },
+    {
+      "id": "minimax-h3-api",
+      "name": "MiniMax H3 API",
+      "repo": "bigger-sun/minimax-h3-skill",
+      "stage": "generate",
+      "official": false,
+      "summary": "一个只用 Python 标准库的脚本，直连海螺 H3 官方 V2 API：文生视频、首尾帧图生视频、多模态参考生成、Context-IR 提示词增强、768P 再生成 2K，以及任务轮询和下载。",
+      "includes": [
+        "minimax-h3"
+      ],
+      "stars": 0,
+      "license": "未标注",
+      "updated": "2026-09-20",
+      "apiKey": "MiniMax",
+      "local": [
+        "Python 3.10+"
+      ],
+      "install": [
+        {
+          "label": "手动安装",
+          "cmd": "git clone https://github.com/bigger-sun/minimax-h3-skill ~/.claude/skills/minimax-h3"
+        }
+      ],
+      "note": "仓库没有许可证文件，商用前请先问作者。skill 名和「H3 提示词改写器」都叫 minimax-h3，两个都装时要改一个文件夹名。",
+      "cn": true
+    },
+    {
+      "id": "ugc-video",
+      "name": "UGC Video Prompt",
+      "repo": "Jarad-z/ugc-video-skill",
+      "stage": "generate",
+      "official": false,
+      "summary": "写「像真人用手机拍的」UGC 短视频提示词：手持微晃、自然光、随口的台词；也能直接调 Seedance、可灵、海螺、Veo、Sora 的官方 API 出片。",
+      "includes": [
+        "ugc-video-prompt"
+      ],
+      "stars": 2,
+      "license": "MIT",
+      "updated": "2026-06-14",
+      "apiKey": null,
+      "keyNote": "只写提示词不需要 key；出片需要对应平台的 key（火山引擎 Ark、可灵、MiniMax、Google 或 OpenAI）",
+      "local": [
+        "Python 3"
+      ],
+      "install": [
+        {
+          "label": "手动安装",
+          "cmd": "git clone https://github.com/Jarad-z/ugc-video-skill ~/.claude/skills/ugc-video-prompt\npip install requests pyjwt"
+        }
+      ],
+      "cn": true
+    },
+    {
+      "id": "seedance-skill-os",
+      "name": "Seedance 2.0 Skill OS",
+      "repo": "Emily2040/seedance-2.0",
+      "stage": "plan",
+      "official": false,
+      "summary": "一整套 Seedance 2.0 导演 skill：想法模糊时先做创意访谈，再出完整或压缩版提示词；镜头、光线、角色、音频分开打磨，支持多镜头连续，遇到版权或审核问题给出合规改写。",
+      "includes": [
+        "seedance-interview",
+        "seedance-prompt",
+        "seedance-prompt-short",
+        "seedance-camera",
+        "seedance-characters",
+        "seedance-sequence",
+        "seedance-copyright",
+        "seedance-troubleshoot"
+      ],
+      "stars": 8000,
+      "license": "MIT",
+      "updated": "2026-09-27",
+      "apiKey": null,
+      "keyNote": "写提示词不需要 key；可选的生成和评测工具要另配服务商 key",
+      "local": [
+        "Python 3"
+      ],
+      "install": [
+        {
+          "label": "克隆项目",
+          "cmd": "git clone https://github.com/Emily2040/seedance-2.0.git\ncd seedance-2.0 && python scripts/install_codex_skill.py --client claude-code --scope user"
+        }
+      ],
+      "note": "共 28 个子 skill，含中日韩等多语言词汇和示例。",
+      "cn": true
+    },
+    {
+      "id": "seedance-studio",
+      "name": "Seedance Studio",
+      "repo": "MrYHM/seedance-studio",
+      "stage": "plan",
+      "official": false,
+      "summary": "把一句话创意、故事或小说改成多集短剧剧本，拆成分镜头脚本，再编译成能直接粘贴进即梦的 Seedance 2.0/2.5 提示词，并管理集与集之间的衔接。",
+      "includes": [
+        "seedance-studio"
+      ],
+      "stars": 1,
+      "license": "MIT",
+      "updated": "2026-09-11",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add MrYHM/seedance-studio"
+        }
+      ],
+      "cn": true
+    },
+    {
+      "id": "minimax-h3-prompt",
+      "name": "MiniMax H3 提示词改写器",
+      "repo": "ye4wzp/minimax-h3-prompt-skill",
+      "stage": "plan",
+      "official": false,
+      "summary": "把说不清的需求补齐成海螺 H3 能用的提示词：时长、镜头数、前 2 秒放什么、声音和台词都先替你定好，再列出替你做了哪些决定。覆盖文生、首帧、首尾帧、尾帧、全参考五种模式。",
+      "includes": [
+        "minimax-h3"
+      ],
+      "stars": 13,
+      "license": "MIT",
+      "updated": "2026-08-07",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        {
+          "label": "手动安装",
+          "cmd": "git clone https://github.com/ye4wzp/minimax-h3-prompt-skill ~/.claude/skills/minimax-h3"
+        }
+      ],
+      "note": "references/ 里收的官方文档适用 MiniMax H3 社区许可证。",
+      "cn": true
+    },
+    {
+      "id": "kling-4-prompt",
+      "name": "Kling 4.0 Prompt",
+      "repo": "kingvid-ai/kling-4-prompt-skill",
+      "stage": "plan",
+      "official": false,
+      "summary": "写和修改可灵 4.0 提示词：文生、图生、参考素材、对白、运镜和多镜头规划。只给可复制的提示词和建议参数，不调用生成。",
+      "includes": [
+        "kling-4-prompt"
+      ],
+      "stars": 0,
+      "license": "MIT",
+      "updated": "2026-10-03",
+      "apiKey": null,
+      "local": [],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add kingvid-ai/kling-4-prompt-skill --skill kling-4-prompt"
+        }
+      ],
+      "cn": true
+    },
+    {
+      "id": "claude-video-studio",
+      "name": "Claude Video 2.0",
+      "repo": "ItsssssJack/claude-video-2",
+      "stage": "compose",
+      "official": false,
+      "summary": "先放一个 21 种风格的样片画廊让你挑，问 5 个问题，再用 HTML + GSAP 写动态图形，经 HyperFrames 渲染成 MP4，并按帧检查节奏和循环。",
+      "includes": [
+        "claude-video-studio"
+      ],
+      "stars": 1,
+      "license": "MIT",
+      "updated": "2026-10-21",
+      "apiKey": null,
+      "keyNote": "纯图形不需要 key；要加 AI 生成的片段需要 Higgsfield",
+      "local": [
+        "Node.js 22+",
+        "FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "手动安装",
+          "cmd": "git clone https://github.com/ItsssssJack/claude-video-2 ~/.claude/skills/claude-video-studio"
+        }
+      ],
+      "note": "仓库约 120MB，大部分是样片视频。",
+      "cn": false
+    },
+    {
+      "id": "product-launch-video",
+      "name": "Product Launch Video",
+      "repo": "EveryInc/product-launch-video",
+      "stage": "compose",
+      "official": false,
+      "summary": "Every 出品的 Remotion 脚手架加 skill，做 15–30 秒的产品发布短片：先出简报和分镜给你确认，再搭建、渲染，最后让多个 agent 评审并迭代。",
+      "includes": [
+        "product-launch-video"
+      ],
+      "stars": 63,
+      "license": "MIT",
+      "updated": "2026-04-20",
+      "apiKey": null,
+      "local": [
+        "Node.js 18+"
+      ],
+      "install": [
+        {
+          "label": "克隆项目",
+          "cmd": "git clone https://github.com/EveryInc/product-launch-video.git\ncd product-launch-video && npm install"
+        }
+      ],
+      "note": "在克隆下来的目录里启动 Claude Code 即可用 /product-launch-video。公司商用 Remotion 需要购买许可证。",
+      "cn": false
+    },
+    {
+      "id": "autoclip",
+      "name": "AutoClip",
+      "repo": "zhouxiaoka/autoclip",
+      "stage": "pipeline",
+      "official": false,
+      "summary": "把 YouTube / B 站链接或本地长视频（讲座、访谈、播客、课程）自动切成各平台成片，配好封面、发布文案，打成 ZIP 发布包，适配抖音、小红书、B 站、YouTube Shorts 等。",
+      "includes": [
+        "autoclip"
+      ],
+      "stars": 9200,
+      "license": "MIT",
+      "updated": "2026-11-03",
+      "apiKey": "大模型 API（兼容 OpenAI 接口即可）",
+      "local": [
+        "AutoClip 桌面应用，或 Python 3.10+ 与 FFmpeg"
+      ],
+      "install": [
+        {
+          "label": "skills CLI",
+          "cmd": "npx skills add zhouxiaoka/autoclip --skill autoclip"
+        }
+      ],
+      "note": "skill 只负责调度，需要先装 AutoClip：下载桌面应用（自带 Python 和 FFmpeg），或运行 uvx autoclip-mcp。",
+      "cn": false
     }
   ],
   "workflows": [
