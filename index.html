@@ -175,6 +175,9 @@ section { scroll-margin-top: 24px; }
 .note { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 .install { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
 .cmd { position: relative; background: var(--code); border-radius: 12px; padding: 11px 64px 11px 14px; min-width: 0; }
+.cmd.primary { background: color-mix(in srgb, var(--clip, var(--accent)) 9%, var(--code)); }
+.hint { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.hint code { font-size: 11.5px; padding: 1px 5px; border-radius: 5px; background: var(--code); overflow-wrap: anywhere; }
 .cmd .lbl { display: block; font-size: 11px; color: var(--faint); margin-bottom: 3px; }
 .cmd pre { margin: 0; font-size: 12px; line-height: 1.55; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
 .copy {
@@ -279,7 +282,7 @@ footer a:hover { color: var(--ink); }
         <label class="toggle"><input type="checkbox" id="f-official">官方出品</label>
         <label class="toggle"><input type="checkbox" id="f-cn">国产模型 / 剪映</label>
         <label class="toggle"><input type="checkbox" id="f-nokey">无需 API key</label>
-        <label class="toggle"><input type="checkbox" id="f-plugin">可插件安装</label>
+        <label class="toggle"><input type="checkbox" id="f-plugin">Claude Code 一键安装</label>
       </div>
     </div>
     <div class="grid" id="grid"></div>
@@ -298,8 +301,8 @@ footer a:hover { color: var(--ink); }
   <section id="market" class="section" aria-labelledby="market-title">
     <div class="market">
       <div>
-        <h2 id="market-title">在 Claude Code 里一次装好</h2>
-        <p>添加 Skill 剪辑台的插件市场，就能按名字安装已打包成插件的 skill；其余的用卡片上的 <code>npx skills add</code> 安装。</p>
+        <h2 id="market-title">在 Claude Code 里一键安装</h2>
+        <p>Skill 剪辑台本身就是一个 Claude Code 插件市场，收录了其中 <b id="market-count"></b> 个 skill。每张卡片最上面的命令复制到终端运行即可：第一行添加市场（只需一次），第二行安装。Cursor、Codex 等其他 agent 用卡片里「其他安装方式」的命令。</p>
       </div>
       <div class="install" id="market-cmds"></div>
     </div>

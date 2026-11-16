@@ -3,7 +3,7 @@
   "installCheckedAt": "2026-11-09",
   "hub": {
     "name": "video-skill-hub",
-    "repo": "ndze5588-afk/video-skill-hub-plugins",
+    "repo": "ndze5588-afk/video-skill-hub",
     "site": "https://video-skill-hub.pages.dev"
   },
   "stages": [
@@ -83,7 +83,14 @@
         "name": "remotion"
       },
       "note": "公司商用 Remotion 需要购买许可证，详见 remotion.dev/license。",
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "remotion",
+        "source": {
+          "source": "github",
+          "repo": "remotion-dev/claude-code-plugin"
+        }
+      }
     },
     {
       "id": "hyperframes",
@@ -123,7 +130,14 @@
         "repo": "heygen-com/hyperframes",
         "name": "hyperframes"
       },
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "hyperframes",
+        "source": {
+          "source": "github",
+          "repo": "heygen-com/hyperframes"
+        }
+      }
     },
     {
       "id": "heygen",
@@ -156,7 +170,19 @@
         "repo": "heygen-com/skills",
         "name": "heygen"
       },
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "heygen",
+        "source": {
+          "source": "github",
+          "repo": "heygen-com/skills"
+        },
+        "skills": [
+          "./heygen-avatar",
+          "./heygen-translate",
+          "./heygen-video"
+        ]
+      }
     },
     {
       "id": "higgsfield",
@@ -193,7 +219,23 @@
         "repo": "higgsfield-ai/skills",
         "name": "higgsfield"
       },
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "higgsfield",
+        "source": {
+          "source": "github",
+          "repo": "higgsfield-ai/skills"
+        },
+        "skills": [
+          "./higgsfield-brandkit",
+          "./higgsfield-faceless-video",
+          "./higgsfield-generate",
+          "./higgsfield-product-photoshoot",
+          "./higgsfield-soul-id",
+          "./higgsfield-video-explainer",
+          "./higgsfield-youtube-thumbnail"
+        ]
+      }
     },
     {
       "id": "runcomfy-video",
@@ -216,7 +258,15 @@
           "cmd": "npx skills add prime-skills/runcomfy-agent-skills --skill ai-video-generation"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "runcomfy-video",
+        "source": {
+          "source": "git-subdir",
+          "url": "prime-skills/runcomfy-agent-skills",
+          "path": "ai-video-generation"
+        }
+      }
     },
     {
       "id": "veo-sora",
@@ -239,7 +289,15 @@
           "cmd": "npx skills add michaelboeding/skills --skill video-generation"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "veo-sora",
+        "source": {
+          "source": "git-subdir",
+          "url": "michaelboeding/skills",
+          "path": "skills/video-generation"
+        }
+      }
     },
     {
       "id": "elevenlabs",
@@ -268,7 +326,23 @@
           "cmd": "npx skills add elevenlabs/skills"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "elevenlabs",
+        "source": {
+          "source": "github",
+          "repo": "elevenlabs/skills"
+        },
+        "skills": [
+          "./dubbing",
+          "./music",
+          "./sound-effects",
+          "./speech-to-text",
+          "./text-to-speech",
+          "./voice-changer",
+          "./voice-isolator"
+        ]
+      }
     },
     {
       "id": "elevenlabs-tts-lite",
@@ -291,7 +365,15 @@
           "cmd": "npx skills add glebis/claude-skills --skill elevenlabs-tts"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "elevenlabs-tts-lite",
+        "source": {
+          "source": "git-subdir",
+          "url": "glebis/claude-skills",
+          "path": "elevenlabs-tts"
+        }
+      }
     },
     {
       "id": "storyboard",
@@ -314,7 +396,14 @@
           "cmd": "npx skills add aicontentskills/ai-video-storyboard-skill"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "storyboard",
+        "source": {
+          "source": "github",
+          "repo": "aicontentskills/ai-video-storyboard-skill"
+        }
+      }
     },
     {
       "id": "claude-youtube",
@@ -338,7 +427,16 @@
         }
       ],
       "keyNote": "频道数据分析需要 YouTube API key，生成封面图需要 Gemini",
-      "cn": false
+      "cn": false,
+      "marketName": "agrici-youtube",
+      "market": {
+        "name": "agrici-youtube",
+        "source": {
+          "source": "git-subdir",
+          "url": "AgriciDaniel/claude-youtube",
+          "path": "skills/claude-youtube"
+        }
+      }
     },
     {
       "id": "character-design",
@@ -361,7 +459,15 @@
           "cmd": "npx skills add agentara/skills --skill video-character-design"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "character-design",
+        "source": {
+          "source": "git-subdir",
+          "url": "agentara/skills",
+          "path": "skills/aigc/video-character-design"
+        }
+      }
     },
     {
       "id": "ffmpeg-skill",
@@ -395,7 +501,14 @@
         "repo": "kajisho5/ffmpeg-skill",
         "name": "ffmpeg-skill"
       },
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "ffmpeg-skill",
+        "source": {
+          "source": "github",
+          "repo": "kajisho5/ffmpeg-skill"
+        }
+      }
     },
     {
       "id": "claude-video",
@@ -429,7 +542,19 @@
         }
       ],
       "keyNote": "AI 生成镜头需要 Gemini（Veo）或 Runway",
-      "cn": false
+      "cn": false,
+      "marketName": "agrici-video",
+      "market": {
+        "name": "agrici-video",
+        "source": {
+          "source": "git-subdir",
+          "url": "AgriciDaniel/claude-video",
+          "path": "skills"
+        },
+        "skills": [
+          "./"
+        ]
+      }
     },
     {
       "id": "video-processing",
@@ -454,7 +579,15 @@
           "cmd": "npx skills add curiositech/some_claude_skills --skill video-processing-editing"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "video-processing",
+        "source": {
+          "source": "git-subdir",
+          "url": "curiositech/some_claude_skills",
+          "path": ".claude/skills/video-processing-editing"
+        }
+      }
     },
     {
       "id": "video-edit-mini",
@@ -479,7 +612,14 @@
           "cmd": "git clone https://github.com/MomoFadaly/video-edit ~/.claude/skills/video-edit"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "video-edit-mini",
+        "source": {
+          "source": "github",
+          "repo": "MomoFadaly/video-edit"
+        }
+      }
     },
     {
       "id": "whisper-transcription",
@@ -505,7 +645,15 @@
           "cmd": "npx skills add madappgang/claude-code --skill transcription"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "whisper-transcription",
+        "source": {
+          "source": "git-subdir",
+          "url": "MadAppGang/claude-code",
+          "path": "plugins/video-editing/skills/transcription"
+        }
+      }
     },
     {
       "id": "ffmpeg-captions",
@@ -530,7 +678,15 @@
           "cmd": "npx skills add josiahsiegel/claude-plugin-marketplace --skill ffmpeg-captions-subtitles"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "ffmpeg-captions",
+        "source": {
+          "source": "git-subdir",
+          "url": "JosiahSiegel/claude-plugin-marketplace",
+          "path": "plugins/ffmpeg-core/skills/ffmpeg-captions-subtitles"
+        }
+      }
     },
     {
       "id": "clawfu-whisper",
@@ -557,7 +713,15 @@
           "cmd": "npx skills add guia-matthieu/clawfu-skills --skill whisper-transcription"
         }
       ],
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "clawfu-whisper",
+        "source": {
+          "source": "git-subdir",
+          "url": "guia-matthieu/clawfu-skills",
+          "path": "skills/automation/whisper-transcription"
+        }
+      }
     },
     {
       "id": "openmontage",
@@ -588,7 +752,8 @@
         }
       ],
       "note": "AGPL-3.0 许可证：拿去做商业服务前需要仔细评估。接入付费生成服务时才需要对应的 key。",
-      "cn": false
+      "cn": false,
+      "noMarket": "这是一个完整项目，要克隆下来在项目目录里用"
     },
     {
       "id": "video-by-reference",
@@ -617,7 +782,14 @@
         }
       ],
       "note": "作者建议在 Claude Code 等本地 agent 里用，网页版沙箱可能缺少 FFmpeg 或 Chrome。",
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "video-by-reference",
+        "source": {
+          "source": "github",
+          "repo": "ishuagrawal/skills"
+        }
+      }
     },
     {
       "id": "minimax-cli",
@@ -642,7 +814,15 @@
           "label": "skills CLI",
           "cmd": "npx skills add MiniMax-AI/cli -y -g"
         }
-      ]
+      ],
+      "market": {
+        "name": "minimax-cli",
+        "source": {
+          "source": "git-subdir",
+          "url": "MiniMax-AI/cli",
+          "path": "skill"
+        }
+      }
     },
     {
       "id": "minimax-h3-skills",
@@ -673,7 +853,14 @@
           "cmd": "npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill '*'"
         }
       ],
-      "note": "星数是 MiniMax-H3 模型仓库的，不只是 skill。"
+      "note": "星数是 MiniMax-H3 模型仓库的，不只是 skill。",
+      "market": {
+        "name": "minimax-h3-skills",
+        "source": {
+          "source": "github",
+          "repo": "MiniMax-AI/MiniMax-H3"
+        }
+      }
     },
     {
       "id": "seedance2-skill",
@@ -698,7 +885,14 @@
           "label": "手动安装",
           "cmd": "git clone https://github.com/zhanghaonan777/Seedance2-skill ~/.claude/skills/seedance2"
         }
-      ]
+      ],
+      "market": {
+        "name": "seedance2-skill",
+        "source": {
+          "source": "github",
+          "repo": "zhanghaonan777/Seedance2-skill"
+        }
+      }
     },
     {
       "id": "seedance-prompt",
@@ -721,7 +915,17 @@
           "label": "skills CLI",
           "cmd": "npx skills add songguoxs/seedance-prompt-skill"
         }
-      ]
+      ],
+      "market": {
+        "name": "seedance-prompt",
+        "source": {
+          "source": "github",
+          "repo": "songguoxs/seedance-prompt-skill"
+        },
+        "skills": [
+          "./.claude/skills/seedance"
+        ]
+      }
     },
     {
       "id": "seedance-prompt-maple",
@@ -744,7 +948,14 @@
           "label": "skills CLI",
           "cmd": "npx skills add MapleShaw/seedance2.0-prompt-skill"
         }
-      ]
+      ],
+      "market": {
+        "name": "seedance-prompt-maple",
+        "source": {
+          "source": "github",
+          "repo": "MapleShaw/seedance2.0-prompt-skill"
+        }
+      }
     },
     {
       "id": "kling-prompt",
@@ -767,7 +978,14 @@
           "label": "skills CLI",
           "cmd": "npx skills add maciejdzierzek/kling-ai-prompt-generator"
         }
-      ]
+      ],
+      "market": {
+        "name": "kling-prompt",
+        "source": {
+          "source": "github",
+          "repo": "maciejdzierzek/kling-ai-prompt-generator"
+        }
+      }
     },
     {
       "id": "ai-video-multi",
@@ -794,7 +1012,8 @@
           "cmd": "git clone https://github.com/0xadvait/ai-video-skill ~/.claude/skills/ai-video\npip install -r ~/.claude/skills/ai-video/scripts/requirements.txt"
         }
       ],
-      "note": "国产模型是通过 Replicate、fal 这类海外平台调用的，不是直连国内接口。"
+      "note": "国产模型是通过 Replicate、fal 这类海外平台调用的，不是直连国内接口。",
+      "noMarket": "装好后要按 skill 目录里的 requirements.txt 装 Python 依赖，插件目录不固定，没法这样装"
     },
     {
       "id": "capcut-cli",
@@ -827,7 +1046,14 @@
           "cmd": "/plugin marketplace add renezander030/capcut-cli\n/plugin install capcut-cli@capcut-cli"
         }
       ],
-      "note": "非字节官方项目。0.18.0 之前的版本有安全问题，请装最新版。"
+      "note": "非字节官方项目。0.18.0 之前的版本有安全问题，请装最新版。",
+      "market": {
+        "name": "capcut-cli",
+        "source": {
+          "source": "github",
+          "repo": "renezander030/capcut-cli"
+        }
+      }
     },
     {
       "id": "video-recap",
@@ -854,7 +1080,15 @@
           "cmd": "/plugin marketplace add zenstory-ai/video-recap-skills\n/plugin install video-recap-skills@video-recap"
         }
       ],
-      "note": "作者实测一条完整视频约 1.3 元。要把字幕烧进画面，需要带 libass 的 FFmpeg（macOS 用 brew install ffmpeg-full）。"
+      "note": "作者实测一条完整视频约 1.3 元。要把字幕烧进画面，需要带 libass 的 FFmpeg（macOS 用 brew install ffmpeg-full）。",
+      "market": {
+        "name": "video-recap",
+        "source": {
+          "source": "git-subdir",
+          "url": "zenstory-ai/video-recap-skills",
+          "path": "skills/video-recap"
+        }
+      }
     },
     {
       "id": "video-use",
@@ -883,7 +1117,8 @@
           "cmd": "git clone https://github.com/browser-use/video-use ~/Developer/video-use\ncd ~/Developer/video-use && uv sync\nln -sfn ~/Developer/video-use ~/.claude/skills/video-use"
         }
       ],
-      "note": "也可以直接让 agent 读仓库里的 install.md 自动安装，它会在需要时向你要 ElevenLabs key。"
+      "note": "也可以直接让 agent 读仓库里的 install.md 自动安装，它会在需要时向你要 ElevenLabs key。",
+      "noMarket": "装好后要在 skill 目录里运行 uv sync，插件目录不固定，没法这样装"
     },
     {
       "id": "video-toolkit",
@@ -918,7 +1153,8 @@
           "label": "克隆项目",
           "cmd": "git clone https://github.com/digitalsamba/claude-code-video-toolkit.git\ncd claude-code-video-toolkit && uv sync"
         }
-      ]
+      ],
+      "noMarket": "这是一个完整项目，要克隆下来在项目目录里用"
     },
     {
       "id": "youtube-clipper",
@@ -946,7 +1182,8 @@
           "cmd": "npx skills add https://github.com/op7418/Youtube-clipper-skill"
         }
       ],
-      "note": "烧录字幕需要带 libass 的 FFmpeg，macOS 上用 brew install ffmpeg-full。"
+      "note": "烧录字幕需要带 libass 的 FFmpeg，macOS 上用 brew install ffmpeg-full。",
+      "noMarket": "SKILL.md 写死了 ~/.claude/skills/youtube-clipper 路径，装成插件会找不到脚本"
     },
     {
       "id": "remotion-motion",
@@ -972,7 +1209,17 @@
           "label": "skills CLI",
           "cmd": "npx skills add haidrrrry/claude-remotion-skill"
         }
-      ]
+      ],
+      "market": {
+        "name": "remotion-motion",
+        "source": {
+          "source": "github",
+          "repo": "haidrrrry/claude-remotion-skill"
+        },
+        "skills": [
+          "./remotion-motion-graphics"
+        ]
+      }
     },
     {
       "id": "motion-design",
@@ -999,7 +1246,17 @@
           "label": "skills CLI",
           "cmd": "npx skills add howseen-ai/claude-motion-design"
         }
-      ]
+      ],
+      "market": {
+        "name": "motion-design",
+        "source": {
+          "source": "github",
+          "repo": "howseen-ai/claude-motion-design"
+        },
+        "skills": [
+          "./skill/motion-design"
+        ]
+      }
     },
     {
       "id": "manim-skill",
@@ -1035,6 +1292,13 @@
       "plugin": {
         "repo": "Yusuke710/manim-skill",
         "name": "manim-skill"
+      },
+      "market": {
+        "name": "manim-skill",
+        "source": {
+          "source": "github",
+          "repo": "Yusuke710/manim-skill"
+        }
       }
     },
     {
@@ -1068,7 +1332,14 @@
           "label": "Claude Code 插件",
           "cmd": "/plugin marketplace add replicate/skills\n/plugin install prompt-videos@replicate"
         }
-      ]
+      ],
+      "market": {
+        "name": "replicate",
+        "source": {
+          "source": "github",
+          "repo": "replicate/skills"
+        }
+      }
     },
     {
       "id": "fal-skills",
@@ -1100,7 +1371,14 @@
           "cmd": "npx skills add fal-ai-community/skills"
         }
       ],
-      "note": "需要先安装 fal 的 genmedia 命令行并运行 genmedia setup。可灵等国产模型是通过 fal 平台调用的。"
+      "note": "需要先安装 fal 的 genmedia 命令行并运行 genmedia setup。可灵等国产模型是通过 fal 平台调用的。",
+      "market": {
+        "name": "fal-skills",
+        "source": {
+          "source": "github",
+          "repo": "fal-ai-community/skills"
+        }
+      }
     },
     {
       "id": "kling-cli",
@@ -1128,7 +1406,14 @@
         }
       ],
       "note": "另外要装可灵 CLI：国内站账号用 npm i -g @klingai/cli-cn，海外站账号用 npm i -g @klingai/cli-global，装错区域会登录失败。",
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "kling-cli",
+        "source": {
+          "source": "github",
+          "repo": "klingai-tech/skills"
+        }
+      }
     },
     {
       "id": "minimax-h3-api",
@@ -1154,7 +1439,14 @@
         }
       ],
       "note": "仓库没有许可证文件，商用前请先问作者。skill 名和「H3 提示词改写器」都叫 minimax-h3，两个都装时要改一个文件夹名。",
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "minimax-h3-api",
+        "source": {
+          "source": "github",
+          "repo": "bigger-sun/minimax-h3-skill"
+        }
+      }
     },
     {
       "id": "ugc-video",
@@ -1180,7 +1472,14 @@
           "cmd": "git clone https://github.com/Jarad-z/ugc-video-skill ~/.claude/skills/ugc-video-prompt\npip install requests pyjwt"
         }
       ],
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "ugc-video",
+        "source": {
+          "source": "github",
+          "repo": "Jarad-z/ugc-video-skill"
+        }
+      }
     },
     {
       "id": "seedance-skill-os",
@@ -1214,7 +1513,14 @@
         }
       ],
       "note": "共 28 个子 skill，含中日韩等多语言词汇和示例。",
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "seedance-skill-os",
+        "source": {
+          "source": "github",
+          "repo": "Emily2040/seedance-2.0"
+        }
+      }
     },
     {
       "id": "seedance-studio",
@@ -1237,7 +1543,14 @@
           "cmd": "npx skills add MrYHM/seedance-studio"
         }
       ],
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "seedance-studio",
+        "source": {
+          "source": "github",
+          "repo": "MrYHM/seedance-studio"
+        }
+      }
     },
     {
       "id": "minimax-h3-prompt",
@@ -1261,7 +1574,14 @@
         }
       ],
       "note": "references/ 里收的官方文档适用 MiniMax H3 社区许可证。",
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "minimax-h3-prompt",
+        "source": {
+          "source": "github",
+          "repo": "ye4wzp/minimax-h3-prompt-skill"
+        }
+      }
     },
     {
       "id": "kling-4-prompt",
@@ -1284,7 +1604,14 @@
           "cmd": "npx skills add kingvid-ai/kling-4-prompt-skill --skill kling-4-prompt"
         }
       ],
-      "cn": true
+      "cn": true,
+      "market": {
+        "name": "kling-4-prompt",
+        "source": {
+          "source": "github",
+          "repo": "kingvid-ai/kling-4-prompt-skill"
+        }
+      }
     },
     {
       "id": "claude-video-studio",
@@ -1312,7 +1639,15 @@
         }
       ],
       "note": "仓库约 120MB，大部分是样片视频。",
-      "cn": false
+      "cn": false,
+      "marketName": "video-studio",
+      "market": {
+        "name": "video-studio",
+        "source": {
+          "source": "github",
+          "repo": "ItsssssJack/claude-video-2"
+        }
+      }
     },
     {
       "id": "product-launch-video",
@@ -1338,7 +1673,8 @@
         }
       ],
       "note": "在克隆下来的目录里启动 Claude Code 即可用 /product-launch-video。公司商用 Remotion 需要购买许可证。",
-      "cn": false
+      "cn": false,
+      "noMarket": "这是一个项目脚手架，要克隆下来在项目目录里用"
     },
     {
       "id": "autoclip",
@@ -1364,7 +1700,15 @@
         }
       ],
       "note": "skill 只负责调度，需要先装 AutoClip：下载桌面应用（自带 Python 和 FFmpeg），或运行 uvx autoclip-mcp。",
-      "cn": false
+      "cn": false,
+      "market": {
+        "name": "autoclip",
+        "source": {
+          "source": "git-subdir",
+          "url": "zhouxiaoka/autoclip",
+          "path": "skills/autoclip"
+        }
+      }
     }
   ],
   "workflows": [

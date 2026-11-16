@@ -23,11 +23,13 @@ jobs:
         run: node scripts/check-install.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Work out marketplace entries
+        run: node scripts/sync-market.mjs
       - run: node scripts/build.mjs
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data
+          git add data .claude-plugin
           git diff --cached --quiet || git commit -m "chore: refresh skill data"
           git push

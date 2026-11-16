@@ -17,9 +17,11 @@
   const byId = Object.fromEntries(skills.map((s) => [s.id, s]));
   const stageById = Object.fromEntries(stages.map((s) => [s.id, s]));
   const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false };
-  // A skill counts as plugin-installable when any install route is a Claude Code plugin,
-  // even if only s.plugin entries can go into this hub's own marketplace.
-  const hasPlugin = (s) => s.install.some((i) => i.label === "Claude Code 插件");
+  // Skills listed in this repo's own marketplace (.claude-plugin/marketplace.json) install by name.
+  const hub = data.hub;
+  const hasPlugin = (s) => Boolean(s.market);
+  const addMarket = `claude plugin marketplace add ${hub.repo}`;
+  const pluginId = (s) => `${s.market.name}@${hub.name}`;
 
   $("#hero-pill").innerHTML = `<b>${skills.length}</b> 个 skill · <b>${skills.filter((s) => s.cn).length}</b> 个支持国产模型 →`;
   $("#checked").textContent = data.checkedAt;
@@ -112,19 +114,30 @@
     return s.keyNote ? `${base}<span class="key-note">（${esc(s.keyNote)}）</span>` : base;
   };
 
+  // The first block on a card: the one way to install it that works everywhere Claude Code runs.
+  // Two shell lines, so a single paste into a terminal adds the marketplace (a no-op the second time) and installs.
+  const quickInstall = (s) =>
+    s.market
+      ? `<div class="cmd primary"><span class="lbl">Claude Code · 在终端粘贴运行</span><pre>${esc(addMarket)}\nclaude plugin install ${esc(pluginId(s))}</pre><button class="copy" data-copy="${esc(`${addMarket}\nclaude plugin install ${pluginId(s)}`)}" aria-label="复制 Claude Code 安装命令">复制</button></div>
+        <p class="hint">添加过市场后，也可以在 Claude Code 里输入 <code>/plugin install ${esc(pluginId(s))}</code></p>`
+      : "";
+
   function cardHtml(s) {
     const st = stageById[s.stage];
     const badges = [
       s.official ? `<span class="badge official" title="由工具或平台本身的团队维护">官方</span>` : "",
       s.cn ? `<span class="badge" title="支持国产视频模型或剪映">国产模型 / 剪映</span>` : "",
     ].join("");
-    // Keep the card short: the first install route shows, everything else folds away.
-    const [first, ...rest] = s.install;
+    // Keep the card short: one install route shows, everything else folds away.
+    // With a marketplace entry that is the Claude Code command; otherwise the upstream's first route.
+    const shown = s.market ? [] : s.install.slice(0, 1);
+    const rest = s.market ? s.install : s.install.slice(1);
     const extras = [
       s.includes.length > 1 ? `<div class="includes" aria-label="包含的 skill">${s.includes.map((i) => `<code>${esc(i)}</code>`).join("")}</div>` : "",
+      s.market ? `<p class="hint">Cursor、Codex 等其他 agent 用下面的命令安装。</p>` : "",
       ...rest.map((i) => cmdBlock(i.label, i.cmd)),
     ].join("");
-    const moreLabel = [s.includes.length > 1 ? `包含 ${s.includes.length} 个 skill` : "", rest.length ? "其他安装方式" : ""].filter(Boolean).join(" · ");
+    const moreLabel = [s.includes.length > 1 ? `包含 ${s.includes.length} 个 skill` : "", rest.length ? (s.market ? "其他 agent / 安装方式" : "其他安装方式") : ""].filter(Boolean).join(" · ");
     return `<article class="card" id="skill-${esc(s.id)}" style="${clipVar(s.stage)}">
       <div class="card-top"><span class="stage-tag">${esc(st.name)}</span>${badges ? `<div class="badges">${badges}</div>` : ""}</div>
       <div>
@@ -139,7 +152,9 @@
       </dl>
       ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}
       <div class="install">
-        ${cmdBlock(first.label, first.cmd)}
+        ${quickInstall(s)}
+        ${shown.map((i) => cmdBlock(i.label, i.cmd)).join("")}
+        ${s.noMarket ? `<p class="hint">没有放进插件市场：${esc(s.noMarket)}。</p>` : ""}
         ${extras ? `<details class="more"><summary>${moreLabel}</summary><div class="more-body">${extras}</div></details>` : ""}
       </div>
     </article>`;
@@ -175,7 +190,13 @@
   // Workflows
   $("#flow-list").innerHTML = workflows
     .map((w) => {
-      const allCmds = w.steps.map((st) => `# ${byId[st.skill].name}\n${byId[st.skill].install[0].cmd}`).join("\n\n");
+      // Marketplace skills go in as one block of shell lines; the rest keep their own commands.
+      const steps = w.steps.map((st) => byId[st.skill]);
+      const viaMarket = steps.filter((s) => s.market);
+      const allCmds = [
+        viaMarket.length ? `# Claude Code\n${addMarket}\n${viaMarket.map((s) => `claude plugin install ${pluginId(s)}`).join("\n")}` : "",
+        ...steps.filter((s) => !s.market).map((s) => `# ${s.name}\n${s.install[0].cmd}`),
+      ].filter(Boolean).join("\n\n");
       return `<article class="flow">
         <div class="flow-head">
           <h3>${esc(w.name)}</h3>
@@ -189,17 +210,12 @@
     })
     .join("");
 
-  // Marketplace commands; hidden until hub.repo names a real public repo.
-  const plugins = skills.filter((s) => s.plugin);
-  const hub = data.hub;
-  if (hub.repo.includes("<")) {
-    $("#market").hidden = true;
-    document.querySelector('.top nav a[href="#market"]').hidden = true;
-  } else {
-    $("#market-cmds").innerHTML =
-      cmdBlock("1. 添加市场", `/plugin marketplace add ${hub.repo}`) +
-      cmdBlock("2. 按需安装", plugins.map((s) => `/plugin install ${s.plugin.name}@${hub.name}`).join("\n"));
-  }
+  // Marketplace band: add it once, then install from any card or browse inside Claude Code.
+  $("#market-count").textContent = skills.filter(hasPlugin).length;
+  $("#market-cmds").innerHTML =
+    cmdBlock("1. 添加市场（只需一次）", addMarket) +
+    cmdBlock("2. 安装卡片上的 skill，比如", `claude plugin install ${pluginId(skills.find(hasPlugin))}`) +
+    cmdBlock("或者在 Claude Code 里浏览全部", "/plugin");
 
   // Run last, once every section above has its final height.
   openFromHash();

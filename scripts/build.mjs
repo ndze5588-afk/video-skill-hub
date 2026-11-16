@@ -1,4 +1,4 @@
-// Builds the deployable site into dist/ and the public plugin marketplace into dist-marketplace/.
+// Builds the deployable site into dist/ and the Claude Code plugin marketplace into .claude-plugin/marketplace.json.
 // Usage: node scripts/build.mjs
 import { readFile, writeFile, mkdir, copyFile, cp } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -45,42 +45,35 @@ await writeFile(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${site}/</loc><lastmod>${data.installCheckedAt || data.checkedAt}</lastmod></url>\n</urlset>\n`
 );
 
-// The marketplace lives in its own public repo (hub.repo) so this repo can stay private.
-// Only skills whose upstream repo ships .claude-plugin/plugin.json can be listed there.
-const [owner] = data.hub.repo.split("/");
-const marketplace = {
-  name: data.hub.name,
-  owner: { name: owner },
-  metadata: { description: "按制作流程整理的 AI 视频 Agent Skills" },
-  plugins: data.skills
-    .filter((s) => s.plugin)
-    .map((s) => ({
-      name: s.plugin.name,
-      source: { source: "github", repo: s.plugin.repo },
+// The plugin marketplace lives in this repo at .claude-plugin/marketplace.json, so users add it with
+// `claude plugin marketplace add <hub.repo>`. scripts/sync-market.mjs works out each skill's s.market.
+const reserved = /^(claude|anthropic|anthropics|cc-plugin)-|^(claude|anthropic|anthropics|claude-code|claude-mods)$/i;
+const seen = new Set();
+const plugins = data.skills
+  .filter((s) => s.market)
+  .map((s) => {
+    const { name, source, skills } = s.market;
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(name) || reserved.test(name)) throw new Error(`${s.id}: plugin name "${name}" is not allowed`);
+    if (seen.has(name)) throw new Error(`${s.id}: plugin name "${name}" is used twice`);
+    seen.add(name);
+    return {
+      name,
+      displayName: s.name,
+      source,
       description: s.summary,
       category: s.stage,
-    })),
+      homepage: `${site}/#skill-${s.id}`,
+      ...(s.license && /^[A-Za-z0-9.+-]+$/.test(s.license) ? { license: s.license } : {}),
+      ...(skills ? { skills } : {}),
+    };
+  });
+const marketplace = {
+  name: data.hub.name,
+  owner: { name: data.hub.repo.split("/")[0], url: site },
+  description: "Skill 剪辑台：按制作流程整理的 AI 视频 Agent Skills，支持可灵、即梦、海螺和剪映",
+  plugins,
 };
-const marketReadme = `# Skill 剪辑台 · 插件市场
+await mkdir(join(root, ".claude-plugin"), { recursive: true });
+await writeFile(join(root, ".claude-plugin/marketplace.json"), JSON.stringify(marketplace, null, 2) + "\n");
 
-[Skill 剪辑台](${site}) 的 Claude Code 插件市场：按制作流程整理的 AI 视频 skill 中，已打包成插件的那些。
-
-\`\`\`
-/plugin marketplace add ${data.hub.repo}
-${marketplace.plugins.map((p) => `/plugin install ${p.name}@${data.hub.name}`).join("\n")}
-\`\`\`
-
-| 插件 | 来源 | 说明 |
-| --- | --- | --- |
-${marketplace.plugins.map((p) => `| \`${p.name}\` | [${p.source.repo}](https://github.com/${p.source.repo}) | ${p.description} |`).join("\n")}
-
-全部 ${data.skills.length} 个视频 skill（含未打包成插件的）、依赖和 API key 说明见 ${site} 。
-
-本仓库由 Skill 剪辑台自动生成。插件归各自作者所有，适用其仓库中的许可证；本仓库中的整理内容采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans)，转载请注明出处。
-`;
-const marketDir = join(root, "dist-marketplace");
-await mkdir(join(marketDir, ".claude-plugin"), { recursive: true });
-await writeFile(join(marketDir, ".claude-plugin/marketplace.json"), JSON.stringify(marketplace, null, 2) + "\n");
-await writeFile(join(marketDir, "README.md"), marketReadme);
-
-console.log(`dist/ built with ${data.skills.length} skills; dist-marketplace/ lists ${marketplace.plugins.length} plugins.`);
+console.log(`dist/ built with ${data.skills.length} skills; .claude-plugin/marketplace.json lists ${plugins.length} plugins.`);
