@@ -2,7 +2,7 @@
 
 **把散落各处的 AI 视频 skill，排成一条时间线。**
 
-网站：https://video-skill-hub.pages.dev · 插件市场：[ndze5588-afk/video-skill-hub-plugins](https://github.com/ndze5588-afk/video-skill-hub-plugins)
+网站：https://video-skill-hub.pages.dev
 
 Skill 剪辑台按视频的制作环节（策划脚本 → 素材生成 → 配音音频 → 合成动画 → 剪辑处理 → 字幕本地化）整理 Claude Code、Cursor、Codex 等 agent 能用的视频 skill。每一条都写明：
 
@@ -13,17 +13,34 @@ Skill 剪辑台按视频的制作环节（策划脚本 → 素材生成 → 配�
 
 特别收录了支持**国产视频模型**（可灵、即梦 Seedance、海螺 MiniMax、通义万相）和**剪映**的 skill，并提供几套串好的工作流模板。
 
+## 在 Claude Code 里安装
+
+本仓库同时是一个 Claude Code 插件市场。在终端运行：
+
+```bash
+claude plugin marketplace add ndze5588-afk/video-skill-hub
+claude plugin install seedance-studio@video-skill-hub   # 换成网站卡片上的名字
+```
+
+也可以在 Claude Code 里输入 `/plugin` 浏览全部。网站每张卡片最上面就是这两行命令，复制即可。
+
+以前添加过 `ndze5588-afk/video-skill-hub-plugins` 的话，直接运行上面第一行，市场会自动改指向本仓库，已装的插件不受影响。
+
+Cursor、Codex 等其他 agent 用卡片里「其他安装方式」的命令（多为 `npx skills add`）。
+
 ## 仓库结构
 
 ```
 data/skills.json               唯一的数据源：环节、skill、工作流
 index.html                     页面（片段格式，可直接发布为 Claude Artifact）
 app.js                         渲染、筛选、复制命令
-scripts/build.mjs              生成 dist/（网站）和 dist-marketplace/（公开的插件市场）
+.claude-plugin/marketplace.json  插件市场，由 build.mjs 生成，不要手改
+scripts/build.mjs              生成 dist/（网站）和 .claude-plugin/marketplace.json
+scripts/sync-market.mjs        读取每个上游仓库，算出各 skill 在插件市场里怎么装（写入 skills.json 的 market 字段）
 scripts/refresh.mjs            从 GitHub 拉取最新星数、许可证、更新日期
 scripts/check-install.mjs      对照上游仓库核对每条安装命令（只读取，不下载、不运行）
-scripts/publish-marketplace.sh 把 dist-marketplace/ 推送到公开的插件市场仓库
-.github/workflows/refresh.yml  每周一自动刷新数据、核对命令并提交
+.github/workflows/refresh.yml  每周一自动刷新数据、核对命令、同步插件市场并提交
+.github/workflows/market.yml   main 上的 skills.json 一有改动就同步插件市场
 ```
 
 ## 本地预览
@@ -50,14 +67,23 @@ python3 -m http.server 8000 -d dist
 
 ## 插件市场
 
-本仓库是私有的。Claude Code 用户添加插件市场时需要访问公开仓库，所以插件市场单独放在 `data/skills.json` 里 `hub.repo` 指向的公开仓库，只包含生成出来的 `marketplace.json`。
+`.claude-plugin/marketplace.json` 由 `data/skills.json` 生成，每个 skill 对应一个插件，名字是 `market.name`。`scripts/sync-market.mjs` 用 git 读取上游仓库（不需要 token），按下面的顺序决定怎么装：
 
-数据有变化时运行：
+1. 写了 `noMarket`：不放进市场，网站上显示原因
+2. `plugin` 指向另一个仓库：直接用上游打包好的插件
+3. 只有一个 skill 匹配、而仓库里还有别的 skill：只装那一个文件夹（`git-subdir`），不把整个合集装进来
+4. 上游 `plugin.json` 不合法：只装 skill 文件夹，绕开那份 manifest
+5. 其余：装整个仓库，Claude Code 自己找不到的 skill 文件夹写进条目的 `skills`
+
+改完数据后本地运行：
 
 ```bash
+node scripts/sync-market.mjs [skill-id ...]
 node scripts/build.mjs
-scripts/publish-marketplace.sh
+claude plugin validate .
 ```
+
+忘了也没关系，推到 main 后 `market.yml` 会自动同步并提交。
 
 ## 收录一个新 skill
 
@@ -73,9 +99,14 @@ scripts/publish-marketplace.sh
 | `keyNote` | 可选。部分功能才需要 key 时写在这里，比如「生成封面需要 Gemini」 |
 | `local` | 需要本地安装的软件 |
 | `install` | 安装命令，可以有多种方式 |
-| `plugin` | 仅当上游仓库带 `.claude-plugin/plugin.json` 时填写，会进入插件市场 |
+| `plugin` | 上游已打包成插件时填写（`repo`、`name`），市场会原样使用 |
+| `marketName` | 可选。插件名默认是 `id`；以 `claude-` 开头等保留名要换一个 |
+| `noMarket` | 可选。不能装成插件的原因，比如要在 skill 目录里跑安装脚本 |
+| `market` | 自动生成，不要手改 |
 
 星数、许可证、更新日期可以先随便填，运行 `node scripts/refresh.mjs` 会自动更新；再运行 `node scripts/check-install.mjs` 确认安装命令无误。
+
+如果 SKILL.md 里写死了 `~/.claude/skills/...` 路径，或者装好后要在 skill 目录里运行安装命令，装成插件会出问题，请填 `noMarket`。
 
 收录标准：仓库公开、含 `SKILL.md`、跟视频制作直接相关、上架前人工读过 SKILL.md 和附带脚本。
 

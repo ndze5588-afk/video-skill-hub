@@ -1,0 +1,543 @@
+{
+  "name": "video-skill-hub",
+  "owner": {
+    "name": "ndze5588-afk",
+    "url": "https://video-skill-hub.pages.dev"
+  },
+  "description": "Skill 剪辑台：按制作流程整理的 AI 视频 Agent Skills，支持可灵、即梦、海螺和剪映",
+  "plugins": [
+    {
+      "name": "remotion",
+      "displayName": "Remotion Skills",
+      "source": {
+        "source": "github",
+        "repo": "remotion-dev/claude-code-plugin"
+      },
+      "description": "Remotion 官方出品，教 agent 用 React 写视频：时间轴、动画、音频、字幕、渲染都有专门的 skill，减少时序和素材引用上的常见错误。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-remotion"
+    },
+    {
+      "name": "hyperframes",
+      "displayName": "HyperFrames",
+      "source": {
+        "source": "github",
+        "repo": "heygen-com/hyperframes"
+      },
+      "description": "HeyGen 开源的「写 HTML 出视频」框架，附带一组 skill：合成画面、GSAP 动画、字幕、配音、网页转视频，以及把 Remotion 项目迁移过来。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-hyperframes",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "heygen",
+      "displayName": "HeyGen Skills",
+      "source": {
+        "source": "github",
+        "repo": "heygen-com/skills"
+      },
+      "description": "用一张照片建数字分身，生成真人出镜的口播视频；也能把已有视频翻译成 175+ 种语言，保留原声并对口型。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-heygen",
+      "license": "MIT",
+      "skills": [
+        "./heygen-avatar",
+        "./heygen-translate",
+        "./heygen-video"
+      ]
+    },
+    {
+      "name": "higgsfield",
+      "displayName": "Higgsfield Skills",
+      "source": {
+        "source": "github",
+        "repo": "higgsfield-ai/skills"
+      },
+      "description": "调用 Higgsfield 生成图片、视频、3D 和音频，另有现成的场景 skill：无露脸短视频、讲解视频、YouTube 封面、产品图、品牌套件。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-higgsfield",
+      "license": "MIT",
+      "skills": [
+        "./higgsfield-brandkit",
+        "./higgsfield-faceless-video",
+        "./higgsfield-generate",
+        "./higgsfield-product-photoshoot",
+        "./higgsfield-soul-id",
+        "./higgsfield-video-explainer",
+        "./higgsfield-youtube-thumbnail"
+      ]
+    },
+    {
+      "name": "runcomfy-video",
+      "displayName": "RunComfy AI Video Generation",
+      "source": {
+        "source": "git-subdir",
+        "url": "prime-skills/runcomfy-agent-skills",
+        "path": "ai-video-generation"
+      },
+      "description": "通过 RunComfy 平台调用多种视频生成模型，让 agent 直接产出 AI 视频片段。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-runcomfy-video",
+      "license": "MIT"
+    },
+    {
+      "name": "veo-sora",
+      "displayName": "Video Generation (Veo / Sora)",
+      "source": {
+        "source": "git-subdir",
+        "url": "michaelboeding/skills",
+        "path": "skills/video-generation"
+      },
+      "description": "用 Google Veo 或 OpenAI Sora 生成视频片段，二选一配好 key 即可。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-veo-sora",
+      "license": "MIT"
+    },
+    {
+      "name": "elevenlabs",
+      "displayName": "ElevenLabs Skills",
+      "source": {
+        "source": "github",
+        "repo": "elevenlabs/skills"
+      },
+      "description": "ElevenLabs 官方 skill 集：文字转语音、语音转文字、配音翻译、音乐、音效、变声、人声分离，覆盖视频里几乎所有声音需求。",
+      "category": "voice",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-elevenlabs",
+      "license": "MIT",
+      "skills": [
+        "./dubbing",
+        "./music",
+        "./sound-effects",
+        "./speech-to-text",
+        "./text-to-speech",
+        "./voice-changer",
+        "./voice-isolator"
+      ]
+    },
+    {
+      "name": "elevenlabs-tts-lite",
+      "displayName": "ElevenLabs TTS（轻量版）",
+      "source": {
+        "source": "git-subdir",
+        "url": "glebis/claude-skills",
+        "path": "elevenlabs-tts"
+      },
+      "description": "社区写的单一 TTS skill，只做一件事：把文案转成配音文件，适合不想装整套官方 skill 的场景。",
+      "category": "voice",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-elevenlabs-tts-lite",
+      "license": "MIT"
+    },
+    {
+      "name": "storyboard",
+      "displayName": "AI Video Storyboard",
+      "source": {
+        "source": "github",
+        "repo": "aicontentskills/ai-video-storyboard-skill"
+      },
+      "description": "把一段需求拆成多镜头分镜，每个镜头附带可直接用于生成模型的提示词，还有画面一致性和后期检查清单。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-storyboard"
+    },
+    {
+      "name": "agrici-youtube",
+      "displayName": "Claude YouTube",
+      "source": {
+        "source": "git-subdir",
+        "url": "AgriciDaniel/claude-youtube",
+        "path": "skills/claude-youtube"
+      },
+      "description": "面向 YouTube 创作者：频道诊断、视频 SEO、留存导向的脚本、Shorts 脚本（含画面切换标记）和标题封面建议。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-claude-youtube",
+      "license": "MIT"
+    },
+    {
+      "name": "character-design",
+      "displayName": "Video Character Design",
+      "source": {
+        "source": "git-subdir",
+        "url": "agentara/skills",
+        "path": "skills/aigc/video-character-design"
+      },
+      "description": "给 AI 视频写可复用的角色设定文档，让同一个角色在不同镜头、不同模型里保持一致。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-character-design",
+      "license": "MIT"
+    },
+    {
+      "name": "ffmpeg-skill",
+      "displayName": "ffmpeg-skill",
+      "source": {
+        "source": "github",
+        "repo": "kajisho5/ffmpeg-skill"
+      },
+      "description": "本地 FFmpeg 剪辑工具箱，42 个工具：剪切、字幕、画幅重构、响度标准化、按平台导出。先探测再动手、做完再校验，不上云、不要 key。",
+      "category": "edit",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-ffmpeg-skill",
+      "license": "MIT"
+    },
+    {
+      "name": "agrici-video",
+      "displayName": "Claude Video",
+      "source": {
+        "source": "git-subdir",
+        "url": "AgriciDaniel/claude-video",
+        "path": "skills"
+      },
+      "description": "16 个视频 skill 的合集：剪辑、转码、加字幕、音频增强、竖屏切条、宣传片、AI 生成镜头、视频分析。",
+      "category": "edit",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-claude-video",
+      "license": "MIT",
+      "skills": [
+        "./"
+      ]
+    },
+    {
+      "name": "video-processing",
+      "displayName": "Video Processing & Editing",
+      "source": {
+        "source": "git-subdir",
+        "url": "curiositech/some_claude_skills",
+        "path": ".claude/skills/video-processing-editing"
+      },
+      "description": "常用剪辑操作的 skill：裁剪、特效、加字幕、格式转换。",
+      "category": "edit",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-video-processing",
+      "license": "MIT"
+    },
+    {
+      "name": "video-edit-mini",
+      "displayName": "video-edit",
+      "source": {
+        "source": "github",
+        "repo": "MomoFadaly/video-edit"
+      },
+      "description": "最小可用的 FFmpeg skill：剪切、拼接、改尺寸、叠加、提取音频、压缩。代码量小，适合当作自己写 skill 的参考。",
+      "category": "edit",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-video-edit-mini",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "whisper-transcription",
+      "displayName": "Transcription with Whisper",
+      "source": {
+        "source": "git-subdir",
+        "url": "MadAppGang/claude-code",
+        "path": "plugins/video-editing/skills/transcription"
+      },
+      "description": "用 Whisper 转写音视频，输出 SRT / VTT / JSON，支持时间轴对齐和说话人区分。",
+      "category": "caption",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-whisper-transcription",
+      "license": "MIT"
+    },
+    {
+      "name": "ffmpeg-captions",
+      "displayName": "FFmpeg Captions & Subtitles",
+      "source": {
+        "source": "git-subdir",
+        "url": "JosiahSiegel/claude-plugin-marketplace",
+        "path": "plugins/ffmpeg-core/skills/ffmpeg-captions-subtitles"
+      },
+      "description": "字幕的后半程：烧录字幕、调字幕样式、从视频里提取字幕轨，附 Whisper 生成字幕的参考流程。",
+      "category": "caption",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-ffmpeg-captions",
+      "license": "MIT"
+    },
+    {
+      "name": "clawfu-whisper",
+      "displayName": "Whisper Transcription（ClawFu）",
+      "source": {
+        "source": "git-subdir",
+        "url": "guia-matthieu/clawfu-skills",
+        "path": "skills/automation/whisper-transcription"
+      },
+      "description": "营销 skill 合集 ClawFu 里的转写 skill，在本地用 Whisper 把音视频转成文字和字幕，不走云端。",
+      "category": "caption",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-clawfu-whisper",
+      "license": "MIT"
+    },
+    {
+      "name": "video-by-reference",
+      "displayName": "Video by Reference",
+      "source": {
+        "source": "github",
+        "repo": "ishuagrawal/skills"
+      },
+      "description": "给一个你喜欢的视频当参考，逐帧和按音频分析它的风格，生成一支风格相近、内容原创的动画短片，配乐也在本地合成。",
+      "category": "pipeline",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-video-by-reference",
+      "license": "MIT"
+    },
+    {
+      "name": "minimax-cli",
+      "displayName": "MiniMax CLI（海螺）",
+      "source": {
+        "source": "git-subdir",
+        "url": "MiniMax-AI/cli",
+        "path": "skill"
+      },
+      "description": "MiniMax 官方命令行，装成 skill 后 agent 能直接调用海螺 / MiniMax-H3 做文生视频、图生视频、参考角色出片，也能生成配音和音乐。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-minimax-cli"
+    },
+    {
+      "name": "minimax-h3-skills",
+      "displayName": "MiniMax-H3 风格 Skills",
+      "source": {
+        "source": "github",
+        "repo": "MiniMax-AI/MiniMax-H3"
+      },
+      "description": "MiniMax 官方随 H3 模型发布的 skill：1 个提示词写作 skill，加 8 个风格模板，包括 3D 动画短片、品牌宣传、手绘、纸艺定格、极简产品广告、MV 字幕。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-minimax-h3-skills"
+    },
+    {
+      "name": "seedance2-skill",
+      "displayName": "Seedance2 Skill（即梦）",
+      "source": {
+        "source": "github",
+        "repo": "zhanghaonan777/Seedance2-skill"
+      },
+      "description": "调用火山引擎 Ark API 用 Seedance 2.0 出片，附 100+ 镜头词库和创意检查（记忆点、惊喜、情绪、叙事）。脚本只用 Python 标准库。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-seedance2-skill",
+      "license": "MIT"
+    },
+    {
+      "name": "seedance-prompt",
+      "displayName": "Seedance 提示词 Skill",
+      "source": {
+        "source": "github",
+        "repo": "songguoxs/seedance-prompt-skill"
+      },
+      "description": "专写即梦 Seedance 2.0 视频提示词，用 /seedance 调用。只出提示词，不调用模型，适合把提示词贴进即梦网页版。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-seedance-prompt",
+      "skills": [
+        "./.claude/skills/seedance"
+      ]
+    },
+    {
+      "name": "seedance-prompt-maple",
+      "displayName": "Seedance 2.0 Prompt Skill",
+      "source": {
+        "source": "github",
+        "repo": "MapleShaw/seedance2.0-prompt-skill"
+      },
+      "description": "另一个 Seedance 2.0 提示词 skill，更侧重运镜、剪辑节奏和配图生成，说「即梦」「运镜」等词会自动触发。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-seedance-prompt-maple",
+      "license": "MIT"
+    },
+    {
+      "name": "kling-prompt",
+      "displayName": "Kling AI Prompt Generator（可灵）",
+      "source": {
+        "source": "github",
+        "repo": "maciejdzierzek/kling-ai-prompt-generator"
+      },
+      "description": "写可灵视频提示词：Kling 3.0 文生、图生视频，数字人 Avatar 2.0，多镜头分镜，运动控制。只出提示词，不调用模型。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-kling-prompt",
+      "license": "MIT"
+    },
+    {
+      "name": "capcut-cli",
+      "displayName": "capcut-cli（剪映草稿）",
+      "source": {
+        "source": "github",
+        "repo": "renezander030/capcut-cli"
+      },
+      "description": "直接读写剪映 / CapCut 草稿文件：改字幕、调时间和速度、音量、套模板、长视频切短视频。不需要剪映 API，改完在剪映里打开继续精修。",
+      "category": "edit",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-capcut-cli",
+      "license": "MIT"
+    },
+    {
+      "name": "video-recap",
+      "displayName": "Video Recap（中文解说）",
+      "source": {
+        "source": "git-subdir",
+        "url": "zenstory-ai/video-recap-skills",
+        "path": "skills/video-recap"
+      },
+      "description": "把一段视频做成中文解说成片：场景切分、语音识别、画面理解、写解说词、配音、合成，成片还能一键导出成剪映草稿接着改。",
+      "category": "pipeline",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-video-recap",
+      "license": "MIT"
+    },
+    {
+      "name": "remotion-motion",
+      "displayName": "Claude Remotion Skill",
+      "source": {
+        "source": "github",
+        "repo": "haidrrrry/claude-remotion-skill"
+      },
+      "description": "社区版 Remotion 动效 skill：一句话做动态图形、B-roll、字幕和音效。渲染完会用 FFmpeg 抽帧自检，有问题先修再交付。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-remotion-motion",
+      "license": "MIT",
+      "skills": [
+        "./remotion-motion-graphics"
+      ]
+    },
+    {
+      "name": "motion-design",
+      "displayName": "Claude Motion Design",
+      "source": {
+        "source": "github",
+        "repo": "howseen-ai/claude-motion-design"
+      },
+      "description": "纯代码做动效视频：用 HTML 写画面，Playwright 逐帧渲染，FFmpeg 合成，配乐和音效自动对齐。不需要 After Effects、Remotion 许可证或剪辑软件。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-motion-design",
+      "license": "MIT",
+      "skills": [
+        "./skill/motion-design"
+      ]
+    },
+    {
+      "name": "manim-skill",
+      "displayName": "Manim Skill",
+      "source": {
+        "source": "github",
+        "repo": "Yusuke710/manim-skill"
+      },
+      "description": "做 3Blue1Brown 风格的数学和知识讲解动画：写旁白，本地生成配音，写 Manim 代码，渲染，再逐轮改进。配音用本地 Kokoro 模型，不需要 key。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-manim-skill",
+      "license": "MIT"
+    },
+    {
+      "name": "replicate",
+      "displayName": "Replicate Skills",
+      "source": {
+        "source": "github",
+        "repo": "replicate/skills"
+      },
+      "description": "Replicate 官方 skill：查找、比较和运行模型。其中 prompt-videos 专讲视频生成和视频编辑模型的提示词技巧。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-replicate",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "fal-skills",
+      "displayName": "fal Skills",
+      "source": {
+        "source": "github",
+        "repo": "fal-ai-community/skills"
+      },
+      "description": "fal.ai 社区维护的 skill 集：模型目录、提示词写法，以及电影感镜头、广告、UGC 口播短视频、对口型等场景配方，覆盖可灵 v3 等视频模型。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-fal-skills",
+      "license": "MIT"
+    },
+    {
+      "name": "kling-cli",
+      "displayName": "可灵 AI 官方 Skill",
+      "source": {
+        "source": "github",
+        "repo": "klingai-tech/skills"
+      },
+      "description": "可灵官方出品，教 agent 用可灵 CLI 出图出视频：文生/图生视频、全能参考、动作控制，还能建可复用的主体（Element）、查灵感值余额。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-kling-cli"
+    },
+    {
+      "name": "minimax-h3-api",
+      "displayName": "MiniMax H3 API",
+      "source": {
+        "source": "github",
+        "repo": "bigger-sun/minimax-h3-skill"
+      },
+      "description": "一个只用 Python 标准库的脚本，直连海螺 H3 官方 V2 API：文生视频、首尾帧图生视频、多模态参考生成、Context-IR 提示词增强、768P 再生成 2K，以及任务轮询和下载。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-minimax-h3-api"
+    },
+    {
+      "name": "ugc-video",
+      "displayName": "UGC Video Prompt",
+      "source": {
+        "source": "github",
+        "repo": "Jarad-z/ugc-video-skill"
+      },
+      "description": "写「像真人用手机拍的」UGC 短视频提示词：手持微晃、自然光、随口的台词；也能直接调 Seedance、可灵、海螺、Veo、Sora 的官方 API 出片。",
+      "category": "generate",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-ugc-video",
+      "license": "MIT"
+    },
+    {
+      "name": "seedance-skill-os",
+      "displayName": "Seedance 2.0 Skill OS",
+      "source": {
+        "source": "github",
+        "repo": "Emily2040/seedance-2.0"
+      },
+      "description": "一整套 Seedance 2.0 导演 skill：想法模糊时先做创意访谈，再出完整或压缩版提示词；镜头、光线、角色、音频分开打磨，支持多镜头连续，遇到版权或审核问题给出合规改写。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-seedance-skill-os",
+      "license": "MIT"
+    },
+    {
+      "name": "seedance-studio",
+      "displayName": "Seedance Studio",
+      "source": {
+        "source": "github",
+        "repo": "MrYHM/seedance-studio"
+      },
+      "description": "把一句话创意、故事或小说改成多集短剧剧本，拆成分镜头脚本，再编译成能直接粘贴进即梦的 Seedance 2.0/2.5 提示词，并管理集与集之间的衔接。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-seedance-studio",
+      "license": "MIT"
+    },
+    {
+      "name": "minimax-h3-prompt",
+      "displayName": "MiniMax H3 提示词改写器",
+      "source": {
+        "source": "github",
+        "repo": "ye4wzp/minimax-h3-prompt-skill"
+      },
+      "description": "把说不清的需求补齐成海螺 H3 能用的提示词：时长、镜头数、前 2 秒放什么、声音和台词都先替你定好，再列出替你做了哪些决定。覆盖文生、首帧、首尾帧、尾帧、全参考五种模式。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-minimax-h3-prompt",
+      "license": "MIT"
+    },
+    {
+      "name": "kling-4-prompt",
+      "displayName": "Kling 4.0 Prompt",
+      "source": {
+        "source": "github",
+        "repo": "kingvid-ai/kling-4-prompt-skill"
+      },
+      "description": "写和修改可灵 4.0 提示词：文生、图生、参考素材、对白、运镜和多镜头规划。只给可复制的提示词和建议参数，不调用生成。",
+      "category": "plan",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-kling-4-prompt",
+      "license": "MIT"
+    },
+    {
+      "name": "video-studio",
+      "displayName": "Claude Video 2.0",
+      "source": {
+        "source": "github",
+        "repo": "ItsssssJack/claude-video-2"
+      },
+      "description": "先放一个 21 种风格的样片画廊让你挑，问 5 个问题，再用 HTML + GSAP 写动态图形，经 HyperFrames 渲染成 MP4，并按帧检查节奏和循环。",
+      "category": "compose",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-claude-video-studio",
+      "license": "MIT"
+    },
+    {
+      "name": "autoclip",
+      "displayName": "AutoClip",
+      "source": {
+        "source": "git-subdir",
+        "url": "zhouxiaoka/autoclip",
+        "path": "skills/autoclip"
+      },
+      "description": "把 YouTube / B 站链接或本地长视频（讲座、访谈、播客、课程）自动切成各平台成片，配好封面、发布文案，打成 ZIP 发布包，适配抖音、小红书、B 站、YouTube Shorts 等。",
+      "category": "pipeline",
+      "homepage": "https://video-skill-hub.pages.dev/#skill-autoclip",
+      "license": "MIT"
+    }
+  ]
+}
