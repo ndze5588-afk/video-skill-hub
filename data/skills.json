@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-11-09",
-  "installCheckedAt": "2026-11-09",
+  "checkedAt": "2026-11-16",
+  "installCheckedAt": "2026-11-16",
   "hub": {
     "name": "video-skill-hub",
     "repo": "ndze5588-afk/video-skill-hub",
@@ -61,9 +61,9 @@
         "remotion-maps",
         "remotion-upgrade"
       ],
-      "stars": 6648,
+      "stars": 7312,
       "license": "见仓库",
-      "updated": "2026-11-09",
+      "updated": "2026-11-16",
       "apiKey": null,
       "local": [
         "Node.js"
@@ -109,9 +109,9 @@
         "remotion-to-hyperframes",
         "figma"
       ],
-      "stars": 81309,
+      "stars": 84910,
       "license": "Apache-2.0",
-      "updated": "2026-11-09",
+      "updated": "2026-11-16",
       "apiKey": null,
       "local": [
         "Node.js"
@@ -151,7 +151,7 @@
         "heygen-video",
         "heygen-translate"
       ],
-      "stars": 542,
+      "stars": 550,
       "license": "MIT",
       "updated": "2026-07-14",
       "apiKey": "HeyGen",
@@ -200,7 +200,7 @@
         "higgsfield-brandkit",
         "higgsfield-soul-id"
       ],
-      "stars": 1927,
+      "stars": 1991,
       "license": "MIT",
       "updated": "2026-11-05",
       "apiKey": "Higgsfield",
@@ -247,7 +247,7 @@
       "includes": [
         "ai-video-generation"
       ],
-      "stars": 61,
+      "stars": 62,
       "license": "MIT",
       "updated": "2026-05-15",
       "apiKey": "RunComfy",
@@ -315,9 +315,9 @@
         "voice-changer",
         "voice-isolator"
       ],
-      "stars": 540,
+      "stars": 569,
       "license": "MIT",
-      "updated": "2026-11-04",
+      "updated": "2026-11-16",
       "apiKey": "ElevenLabs",
       "local": [],
       "install": [
@@ -354,9 +354,9 @@
       "includes": [
         "elevenlabs-tts"
       ],
-      "stars": 410,
+      "stars": 414,
       "license": "MIT",
-      "updated": "2026-11-07",
+      "updated": "2026-11-10",
       "apiKey": "ElevenLabs",
       "local": [],
       "install": [
@@ -385,7 +385,7 @@
       "includes": [
         "ai-video-storyboard"
       ],
-      "stars": 71,
+      "stars": 75,
       "license": "未标注",
       "updated": "2026-04-09",
       "apiKey": null,
@@ -415,7 +415,7 @@
       "includes": [
         "youtube"
       ],
-      "stars": 712,
+      "stars": 778,
       "license": "MIT",
       "updated": "2026-04-10",
       "apiKey": null,
@@ -448,7 +448,7 @@
       "includes": [
         "video-character-design"
       ],
-      "stars": 624,
+      "stars": 630,
       "license": "MIT",
       "updated": "2026-09-29",
       "apiKey": null,
@@ -479,9 +479,9 @@
       "includes": [
         "ffmpeg-skill"
       ],
-      "stars": 4856,
+      "stars": 6089,
       "license": "MIT",
-      "updated": "2026-11-07",
+      "updated": "2026-11-16",
       "apiKey": null,
       "local": [
         "FFmpeg",
@@ -527,7 +527,7 @@
         "video-enhance",
         "video-analyze"
       ],
-      "stars": 32,
+      "stars": 34,
       "license": "MIT",
       "updated": "2026-04-06",
       "apiKey": null,
@@ -566,7 +566,7 @@
       "includes": [
         "video-processing-editing"
       ],
-      "stars": 263,
+      "stars": 271,
       "license": "MIT",
       "updated": "2026-11-05",
       "apiKey": null,
@@ -631,7 +631,7 @@
       "includes": [
         "transcription"
       ],
-      "stars": 287,
+      "stars": 288,
       "license": "MIT",
       "updated": "2026-03-15",
       "apiKey": null,
@@ -665,7 +665,7 @@
       "includes": [
         "ffmpeg-captions-subtitles"
       ],
-      "stars": 61,
+      "stars": 62,
       "license": "MIT",
       "updated": "2026-06-18",
       "apiKey": null,
@@ -736,9 +736,9 @@
         "pipelines",
         "meta"
       ],
-      "stars": 78836,
+      "stars": 80814,
       "license": "AGPL-3.0",
-      "updated": "2026-11-09",
+      "updated": "2026-11-16",
       "apiKey": null,
       "local": [
         "Python 3.10+",
@@ -765,7 +765,7 @@
       "includes": [
         "video-by-reference"
       ],
-      "stars": 74,
+      "stars": 76,
       "license": "MIT",
       "updated": "2026-10-19",
       "apiKey": null,
@@ -802,9 +802,9 @@
       "includes": [
         "mmx-cli"
       ],
-      "stars": 2210,
+      "stars": 2224,
       "license": "未标注",
-      "updated": "2026-11-09",
+      "updated": "2026-11-10",
       "apiKey": "MiniMax（Token Plan）",
       "local": [
         "Node.js"
@@ -841,7 +841,7 @@
         "minimalist-product-ad-generator",
         "music-video-subtitle-generator"
       ],
-      "stars": 11649,
+      "stars": 11931,
       "license": "未标注",
       "updated": "2026-10-28",
       "apiKey": null,
@@ -873,7 +873,7 @@
       "includes": [
         "seedance2"
       ],
-      "stars": 138,
+      "stars": 140,
       "license": "MIT",
       "updated": "2026-02-21",
       "apiKey": "火山引擎 Ark",
@@ -905,7 +905,7 @@
       "includes": [
         "seedance"
       ],
-      "stars": 2992,
+      "stars": 3010,
       "license": "未标注",
       "updated": "2026-02-12",
       "apiKey": null,
@@ -938,7 +938,7 @@
       "includes": [
         "seedance"
       ],
-      "stars": 840,
+      "stars": 846,
       "license": "MIT",
       "updated": "2026-06-21",
       "apiKey": null,
@@ -998,7 +998,7 @@
       "includes": [
         "ai-video"
       ],
-      "stars": 9,
+      "stars": 10,
       "license": "MIT",
       "updated": "2026-06-09",
       "apiKey": "Replicate 和 fal（可选 Gemini、ElevenLabs）",
@@ -1026,9 +1026,9 @@
       "includes": [
         "capcut-edit"
       ],
-      "stars": 1138,
+      "stars": 1208,
       "license": "MIT",
-      "updated": "2026-11-08",
+      "updated": "2026-11-15",
       "apiKey": null,
       "keyNote": "翻译字幕功能需要 Anthropic key",
       "local": [
@@ -1066,9 +1066,9 @@
       "includes": [
         "video-recap"
       ],
-      "stars": 614,
+      "stars": 629,
       "license": "MIT",
-      "updated": "2026-11-07",
+      "updated": "2026-11-15",
       "apiKey": "小米 MiMo",
       "local": [
         "Python 3.10+",
@@ -1102,7 +1102,7 @@
         "video-use",
         "manim-video"
       ],
-      "stars": 30787,
+      "stars": 31108,
       "license": "MIT",
       "updated": "2026-10-08",
       "apiKey": "ElevenLabs（用于转写）",
@@ -1138,9 +1138,9 @@
         "playwright-recording",
         "frontend-design"
       ],
-      "stars": 2485,
+      "stars": 2586,
       "license": "MIT",
-      "updated": "2026-11-08",
+      "updated": "2026-11-16",
       "apiKey": null,
       "keyNote": "配音、AI 画面等功能需要对应服务的 key，部分模型需要云 GPU",
       "local": [
@@ -1167,7 +1167,7 @@
       "includes": [
         "youtube-clipper"
       ],
-      "stars": 2293,
+      "stars": 2322,
       "license": "MIT",
       "updated": "2026-01-22",
       "apiKey": "unknown",
@@ -1196,7 +1196,7 @@
       "includes": [
         "remotion-motion-graphics"
       ],
-      "stars": 895,
+      "stars": 1041,
       "license": "MIT",
       "updated": "2026-08-12",
       "apiKey": null,
@@ -1232,7 +1232,7 @@
       "includes": [
         "motion-design"
       ],
-      "stars": 798,
+      "stars": 832,
       "license": "MIT",
       "updated": "2026-10-04",
       "apiKey": null,
@@ -1269,7 +1269,7 @@
       "includes": [
         "manim-skill"
       ],
-      "stars": 197,
+      "stars": 207,
       "license": "MIT",
       "updated": "2026-10-07",
       "apiKey": null,
@@ -1318,7 +1318,7 @@
         "build-models",
         "publish-models"
       ],
-      "stars": 148,
+      "stars": 149,
       "license": "Apache-2.0",
       "updated": "2026-06-04",
       "apiKey": "Replicate",
@@ -1358,7 +1358,7 @@
         "ugc",
         "character-design"
       ],
-      "stars": 265,
+      "stars": 271,
       "license": "MIT",
       "updated": "2026-11-07",
       "apiKey": "fal",
@@ -1390,7 +1390,7 @@
       "includes": [
         "kling-cli"
       ],
-      "stars": 0,
+      "stars": 1,
       "license": "见仓库",
       "updated": "2026-11-13",
       "apiKey": "可灵账号",
@@ -1498,9 +1498,9 @@
         "seedance-copyright",
         "seedance-troubleshoot"
       ],
-      "stars": 8000,
+      "stars": 8198,
       "license": "MIT",
-      "updated": "2026-09-27",
+      "updated": "2026-10-03",
       "apiKey": null,
       "keyNote": "写提示词不需要 key；可选的生成和评测工具要另配服务商 key",
       "local": [
@@ -1532,7 +1532,7 @@
       "includes": [
         "seedance-studio"
       ],
-      "stars": 1,
+      "stars": 2,
       "license": "MIT",
       "updated": "2026-09-11",
       "apiKey": null,
@@ -1623,7 +1623,7 @@
       "includes": [
         "claude-video-studio"
       ],
-      "stars": 1,
+      "stars": 175,
       "license": "MIT",
       "updated": "2026-10-21",
       "apiKey": null,
@@ -1659,7 +1659,7 @@
       "includes": [
         "product-launch-video"
       ],
-      "stars": 63,
+      "stars": 83,
       "license": "MIT",
       "updated": "2026-04-20",
       "apiKey": null,
@@ -1686,9 +1686,9 @@
       "includes": [
         "autoclip"
       ],
-      "stars": 9200,
+      "stars": 10554,
       "license": "MIT",
-      "updated": "2026-11-03",
+      "updated": "2026-11-15",
       "apiKey": "大模型 API（兼容 OpenAI 接口即可）",
       "local": [
         "AutoClip 桌面应用，或 Python 3.10+ 与 FFmpeg"
