@@ -79,6 +79,8 @@ section { scroll-margin-top: 24px; }
 }
 .pill b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 .pill:hover { color: var(--ink); }
+.views { margin: 0; font-size: 13px; color: var(--faint); }
+.views b { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
 .hero h1 { font-size: clamp(36px, 6vw, 68px); line-height: 1.12; letter-spacing: -0.025em; }
 .lead { margin: 0; font-size: clamp(16px, 1.6vw, 19px); color: var(--muted); max-width: 30em; text-wrap: balance; }
 .cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
@@ -257,6 +259,7 @@ footer a:hover { color: var(--ink); }
       <a class="btn primary" href="#bin">浏览全部 skill</a>
       <a class="btn ghost" href="#flows">查看工作流</a>
     </div>
+    <p class="views" id="views" hidden>已被浏览 <b id="views-n"></b> 次</p>
   </section>
 
   <div class="timeline-wrap">

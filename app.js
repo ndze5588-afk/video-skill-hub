@@ -217,6 +217,26 @@
     cmdBlock("2. 安装卡片上的 skill，比如", `claude plugin install ${pluginId(skills.find(hasPlugin))}`) +
     cmdBlock("或者在 Claude Code 里浏览全部", "/plugin");
 
+  // View counter (functions/api/views.js). Counts one visit per browser session; stays hidden if the
+  // counter isn't set up or can't be reached, e.g. in a local preview.
+  (async () => {
+    let counted = false;
+    try {
+      counted = sessionStorage.getItem("vsh-viewed") === "1";
+    } catch {}
+    try {
+      const res = await fetch("/api/views", { method: counted ? "GET" : "POST" });
+      if (!res.ok) return;
+      const { views } = await res.json();
+      if (!Number.isFinite(views) || views < 1) return;
+      try {
+        sessionStorage.setItem("vsh-viewed", "1");
+      } catch {}
+      $("#views-n").textContent = views.toLocaleString("zh-CN");
+      $("#views").hidden = false;
+    } catch {}
+  })();
+
   // Run last, once every section above has its final height.
   openFromHash();
 })();
