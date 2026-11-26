@@ -35,7 +35,7 @@ data/skills.json               唯一的数据源：环节、skill、工作流
 index.html                     页面（片段格式，可直接发布为 Claude Artifact）
 app.js                         渲染、筛选、复制命令
 .claude-plugin/marketplace.json  插件市场，由 build.mjs 生成，不要手改
-functions/api/views.js         浏览数接口（Cloudflare Pages Functions + D1）
+functions/api/views.js         访客数接口（Cloudflare Pages Functions + D1）
 scripts/build.mjs              生成 dist/（网站）和 .claude-plugin/marketplace.json
 scripts/sync-market.mjs        读取每个上游仓库，算出各 skill 在插件市场里怎么装（写入 skills.json 的 market 字段）
 scripts/refresh.mjs            从 GitHub 拉取最新星数、许可证、更新日期
@@ -66,9 +66,9 @@ python3 -m http.server 8000 -d dist
 
 自定义域名在 Pages 项目的 Custom domains 里添加。
 
-### 浏览数
+### 访客数
 
-首页的「已被浏览 N 次」由 `functions/api/views.js`（Cloudflare Pages Functions）计数，存在 D1 数据库里。同一浏览器会话只算一次。第一次部署后要绑定一次数据库：
+首页的「已有 N 位访客」由 `functions/api/views.js`（Cloudflare Pages Functions）计数，存在 D1 数据库里。同一个 IP 只算一位访客；数据库里只存 IP 加随机盐后的 SHA-256 哈希，不存原始 IP。第一次部署后要绑定一次数据库：
 
 1. Cloudflare 后台 → Storage & Databases → D1 → Create，名字随意（如 `video-skill-hub`）
 2. Workers & Pages → 本项目 → Settings → Bindings → Add → D1 database，变量名填 `DB`，选上一步的数据库
