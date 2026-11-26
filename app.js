@@ -16,7 +16,7 @@
   const { stages, skills, workflows } = data;
   const byId = Object.fromEntries(skills.map((s) => [s.id, s]));
   const stageById = Object.fromEntries(stages.map((s) => [s.id, s]));
-  const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false, expanded: false };
+  const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false, shown: 6 };
   // Skills listed in this repo's own marketplace (.claude-plugin/marketplace.json) install by name.
   const hub = data.hub;
   const hasPlugin = (s) => Boolean(s.market);
@@ -78,8 +78,9 @@
       card = document.getElementById(`skill-${id}`);
     }
     if (!card) {
-      // Still folded away below the first few cards.
-      state.expanded = true;
+      // Still folded away: open enough batches of cards to reach it.
+      const at = skills.filter(matches).sort((a, b) => b.stars - a.stars).findIndex((s) => s.id === id);
+      state.shown = Math.ceil((at + 1) / STEP) * STEP;
       render();
       card = document.getElementById(`skill-${id}`);
     }
@@ -198,31 +199,35 @@
     return true;
   }
 
-  // Only the first few cards show until 展开更多 is pressed; changing a filter folds the list again.
-  const FIRST = 6;
+  // Cards show STEP at a time: 展开更多 adds another STEP, and once all are out the button folds them back.
+  // Changing a filter starts again from the first STEP.
+  const STEP = 6;
   let lastFilters = "";
   function render() {
     const filters = JSON.stringify([state.q, state.stage, state.official, state.nokey, state.plugin, state.cn]);
     if (filters !== lastFilters) {
-      state.expanded = false;
+      state.shown = STEP;
       lastFilters = filters;
     }
     const list = skills.filter(matches).sort((a, b) => b.stars - a.stars);
-    const shown = state.expanded ? list : list.slice(0, FIRST);
-    $("#grid").innerHTML = list.length ? shown.map(cardHtml).join("") : `<div class="empty">没有符合条件的 skill。换个关键词，或取消一些筛选试试。</div>`;
+    $("#grid").innerHTML = list.length ? list.slice(0, state.shown).map(cardHtml).join("") : `<div class="empty">没有符合条件的 skill。换个关键词，或取消一些筛选试试。</div>`;
     $("#count").textContent = `${list.length} / ${skills.length}`;
-    const hidden = list.length - FIRST;
-    $("#more-cards").hidden = hidden <= 0;
-    $("#more-cards").innerHTML = state.expanded
-      ? `<button type="button" class="more-btn" aria-expanded="true">收起 <span aria-hidden="true">▴</span></button>`
-      : `<button type="button" class="more-btn" aria-expanded="false">展开更多（还有 ${hidden} 个） <span aria-hidden="true">▾</span></button>`;
+    const left = list.length - state.shown;
+    $("#more-cards").hidden = list.length <= STEP;
+    $("#more-cards").innerHTML =
+      left > 0
+        ? `<button type="button" class="more-btn" data-more="next">展开更多（还有 ${left} 个） <span aria-hidden="true">▾</span></button>`
+        : `<button type="button" class="more-btn" data-more="fold">收起 <span aria-hidden="true">▴</span></button>`;
   }
   $("#more-cards").addEventListener("click", (e) => {
-    if (!e.target.closest(".more-btn")) return;
-    const collapsing = state.expanded;
-    state.expanded = !state.expanded;
+    const btn = e.target.closest(".more-btn");
+    if (!btn) return;
+    const folding = btn.dataset.more === "fold";
+    const firstNew = $("#grid").children.length;
+    state.shown = folding ? STEP : state.shown + STEP;
     render();
-    if (collapsing) $("#bin").scrollIntoView({ block: "start" });
+    if (folding) $("#bin").scrollIntoView({ block: "start" });
+    else $("#grid").children[firstNew]?.querySelector("a, button")?.focus({ preventScroll: true });
   });
   render();
 
