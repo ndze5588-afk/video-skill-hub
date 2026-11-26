@@ -16,7 +16,7 @@
   const { stages, skills, workflows } = data;
   const byId = Object.fromEntries(skills.map((s) => [s.id, s]));
   const stageById = Object.fromEntries(stages.map((s) => [s.id, s]));
-  const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false };
+  const state = { q: "", stage: null, official: false, nokey: false, plugin: false, cn: false, expanded: false };
   // Skills listed in this repo's own marketplace (.claude-plugin/marketplace.json) install by name.
   const hub = data.hub;
   const hasPlugin = (s) => Boolean(s.market);
@@ -75,6 +75,12 @@
       state.q = ""; $("#q").value = "";
       clearToggles();
       setStage(null);
+      card = document.getElementById(`skill-${id}`);
+    }
+    if (!card) {
+      // Still folded away below the first few cards.
+      state.expanded = true;
+      render();
       card = document.getElementById(`skill-${id}`);
     }
     card.scrollIntoView({ block: "center" });
@@ -192,11 +198,32 @@
     return true;
   }
 
+  // Only the first few cards show until 展开更多 is pressed; changing a filter folds the list again.
+  const FIRST = 6;
+  let lastFilters = "";
   function render() {
+    const filters = JSON.stringify([state.q, state.stage, state.official, state.nokey, state.plugin, state.cn]);
+    if (filters !== lastFilters) {
+      state.expanded = false;
+      lastFilters = filters;
+    }
     const list = skills.filter(matches).sort((a, b) => b.stars - a.stars);
-    $("#grid").innerHTML = list.length ? list.map(cardHtml).join("") : `<div class="empty">没有符合条件的 skill。换个关键词，或取消一些筛选试试。</div>`;
+    const shown = state.expanded ? list : list.slice(0, FIRST);
+    $("#grid").innerHTML = list.length ? shown.map(cardHtml).join("") : `<div class="empty">没有符合条件的 skill。换个关键词，或取消一些筛选试试。</div>`;
     $("#count").textContent = `${list.length} / ${skills.length}`;
+    const hidden = list.length - FIRST;
+    $("#more-cards").hidden = hidden <= 0;
+    $("#more-cards").innerHTML = state.expanded
+      ? `<button type="button" class="more-btn" aria-expanded="true">收起 <span aria-hidden="true">▴</span></button>`
+      : `<button type="button" class="more-btn" aria-expanded="false">展开更多（还有 ${hidden} 个） <span aria-hidden="true">▾</span></button>`;
   }
+  $("#more-cards").addEventListener("click", (e) => {
+    if (!e.target.closest(".more-btn")) return;
+    const collapsing = state.expanded;
+    state.expanded = !state.expanded;
+    render();
+    if (collapsing) $("#bin").scrollIntoView({ block: "start" });
+  });
   render();
 
   // A link like #skill-capcut-cli opens that card, even after filters or a search hid it.

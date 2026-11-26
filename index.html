@@ -209,6 +209,12 @@ details.more summary:hover { color: var(--ink); }
 .more-body { display: grid; gap: 10px; margin-top: 12px; }
 .includes { display: flex; flex-wrap: wrap; gap: 5px; }
 .includes code { font-size: 11px; padding: 2px 7px; border-radius: 6px; background: var(--code); color: var(--muted); }
+.more-cards { display: flex; align-items: center; gap: 16px; margin-top: 28px; }
+.more-cards::before, .more-cards::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.more-cards[hidden] { display: none; }
+.more-btn { all: unset; cursor: pointer; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--body); font-size: 14px; white-space: nowrap; }
+.more-btn:hover { border-color: var(--faint); color: var(--ink); }
+.more-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .empty { padding: 56px 24px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 18px; }
 
 /* Workflows */
@@ -303,6 +309,7 @@ footer a:hover { color: var(--ink); }
       </details>
     </div>
     <div class="grid" id="grid"></div>
+    <div class="more-cards" id="more-cards" hidden></div>
   </section>
 
   <section id="flows" class="section" aria-labelledby="flows-title">
