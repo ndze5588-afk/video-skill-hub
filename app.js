@@ -27,19 +27,23 @@
   $("#checked").textContent = data.checkedAt;
   $("#install-checked").textContent = data.installCheckedAt || data.checkedAt;
 
-  // Timeline
+  // A small coloured chip naming one skill; used in the workflow steps, and opens that skill's details.
   const clipHtml = (s) =>
     `<button class="clip" style="${clipVar(s.stage)}" data-jump="${esc(s.id)}" title="${esc(s.name)} · ${esc(s.repo)}"><span class="clip-name">${esc(s.name)}</span><span class="clip-owner">${esc(s.repo.split("/")[0])}</span></button>`;
-  const linear = stages.filter((s) => s.id !== "pipeline");
-  const cols = linear
+
+  // Stage tiles: one per production step, with a plain-language hint and how many skills it holds.
+  // Clicking one filters the list below (clicking it again clears the filter).
+  $("#timeline").innerHTML = stages
     .map((st, i) => {
-      const clips = skills.filter((s) => s.stage === st.id).map(clipHtml).join("");
-      return `<div class="col"><button class="stage-btn" style="${clipVar(st.id)}" data-stage="${st.id}" aria-pressed="false" title="${esc(st.hint)}"><span class="n">${String(i + 1).padStart(2, "0")}</span>${esc(st.name)}</button>${clips}</div>`;
+      const n = skills.filter((s) => s.stage === st.id).length;
+      return `<button type="button" class="stage-btn stage-tile" style="${clipVar(st.id)}" data-stage="${st.id}" aria-pressed="false">
+        <span class="n">${st.id === "pipeline" ? "一条龙" : String(i + 1).padStart(2, "0")}</span>
+        <b>${esc(st.name)}</b>
+        <span class="hint">${esc(st.hint)}</span>
+        <span class="cnt">${n} 个 skill</span>
+      </button>`;
     })
     .join("");
-  const pipe = stageById.pipeline;
-  const pipeClips = skills.filter((s) => s.stage === "pipeline").map(clipHtml).join("");
-  $("#timeline").innerHTML = `<div class="cols">${cols}</div><div class="pipe"><button class="stage-btn" style="${clipVar("pipeline")}" data-stage="pipeline" aria-pressed="false" title="${esc(pipe.hint)}">${esc(pipe.name)}</button><div class="pipe-clips">${pipeClips}</div></div>`;
 
   // Stage dropdown, with how many skills each stage holds
   const perStage = (id) => skills.filter((s) => s.stage === id).length;
@@ -63,31 +67,13 @@
       if (fromTimeline) $("#bin").scrollIntoView();
       return;
     }
-    const jump = e.target.closest("[data-jump]");
-    if (jump) jumpTo(jump.dataset.jump);
+    const open = e.target.closest("[data-jump], [data-open]");
+    if (open) openDetail(open.dataset.jump || open.dataset.open);
     const copy = e.target.closest("[data-copy]");
     if (copy) copyText(copy, copy.dataset.copy);
   });
 
-  function jumpTo(id) {
-    let card = document.getElementById(`skill-${id}`);
-    if (!card) {
-      state.q = ""; $("#q").value = "";
-      clearToggles();
-      setStage(null);
-      card = document.getElementById(`skill-${id}`);
-    }
-    if (!card) {
-      // Still folded away: open enough batches of cards to reach it.
-      const at = skills.filter(matches).sort((a, b) => b.stars - a.stars).findIndex((s) => s.id === id);
-      state.shown = Math.ceil((at + 1) / STEP) * STEP;
-      render();
-      card = document.getElementById(`skill-${id}`);
-    }
-    card.scrollIntoView({ block: "center" });
-    card.classList.add("flash");
-    setTimeout(() => card.classList.remove("flash"), 1400);
-  }
+
 
   async function copyText(btn, text) {
     btn.dataset.label ||= btn.textContent;
@@ -144,17 +130,40 @@
   // Two shell lines, so a single paste into a terminal adds the marketplace (a no-op the second time) and installs.
   const quickInstall = (s) =>
     s.market
-      ? `<div class="cmd primary"><span class="lbl">Claude Code · 在终端粘贴运行</span><pre>${esc(addMarket)}\nclaude plugin install ${esc(pluginId(s))}</pre><button class="copy" data-copy="${esc(`${addMarket}\nclaude plugin install ${pluginId(s)}`)}" aria-label="复制 Claude Code 安装命令">复制</button></div>
-        <p class="hint">添加过市场后，也可以在 Claude Code 里输入 <code>/plugin install ${esc(pluginId(s))}</code></p>`
+      ? `<div class="cmd primary"><span class="lbl">安装命令 · 复制后粘贴到终端，按回车</span><pre>${esc(addMarket)}\nclaude plugin install ${esc(pluginId(s))}</pre><button class="copy" data-copy="${esc(`${addMarket}\nclaude plugin install ${pluginId(s)}`)}" aria-label="复制 Claude Code 安装命令">复制</button></div>
+        <p class="hint">还没装 Claude Code？先看 <a href="#start" data-close>新手入门</a>。两行一起粘贴运行即可，第一行重复运行也没关系。</p>`
       : "";
 
-  function cardHtml(s) {
-    const st = stageById[s.stage];
-    const badges = [
+  const badgesHtml = (s) =>
+    [
       s.official ? `<span class="badge official" title="由工具或平台本身的团队维护">官方</span>` : "",
       s.cn ? `<span class="badge" title="支持国产视频模型或剪映">国产模型 / 剪映</span>` : "",
     ].join("");
-    // Keep the card short: one install route shows, everything else folds away.
+  const keyShort = (s) => (s.apiKey === "unknown" ? "API key 未核实" : s.apiKey === null ? "不用 API key" : "要 API key");
+
+  // The grid card: just enough to decide whether to look closer. The whole card opens the details.
+  function cardHtml(s) {
+    const st = stageById[s.stage];
+    const badges = badgesHtml(s);
+    return `<article class="card" id="skill-${esc(s.id)}" style="${clipVar(s.stage)}">
+      <div class="card-top"><span class="stage-tag">${esc(st.name)}</span>${badges ? `<div class="badges">${badges}</div>` : ""}</div>
+      <div>
+        <h3><button type="button" class="card-open" data-open="${esc(s.id)}">${esc(s.name)}</button></h3>
+        <span class="repo">${esc(s.repo)}</span>
+      </div>
+      <p class="summary clamp">${esc(s.summary)}</p>
+      <div class="card-foot">
+        <span class="num">★ ${stars(s.stars)}</span><span>${keyShort(s)}</span>${s.market ? `<span>可一键安装</span>` : ""}
+        <span class="go" aria-hidden="true">详情 →</span>
+      </div>
+    </article>`;
+  }
+
+  // Everything about one skill, shown in the details dialog.
+  function detailHtml(s) {
+    const st = stageById[s.stage];
+    const badges = badgesHtml(s);
+    // One install route shows, everything else folds away.
     // With a marketplace entry that is the Claude Code command; otherwise the upstream's first route.
     const shown = s.market ? [] : s.install.slice(0, 1);
     const rest = s.market ? s.install : s.install.slice(1);
@@ -164,11 +173,11 @@
       ...rest.map((i) => cmdBlock(i.label, i.cmd)),
     ].join("");
     const moreLabel = [s.includes.length > 1 ? `包含 ${s.includes.length} 个 skill` : "", rest.length ? (s.market ? "其他 agent / 安装方式" : "其他安装方式") : ""].filter(Boolean).join(" · ");
-    return `<article class="card" id="skill-${esc(s.id)}" style="${clipVar(s.stage)}">
+    return `<div class="detail-inner" style="${clipVar(s.stage)}">
       <div class="card-top"><span class="stage-tag">${esc(st.name)}</span>${badges ? `<div class="badges">${badges}</div>` : ""}</div>
       <div>
-        <h3><a href="#skill-${esc(s.id)}" class="permalink" title="这个 skill 的链接">${esc(s.name)}</a></h3>
-        <a class="repo" href="https://github.com/${esc(s.repo)}" target="_blank" rel="noopener">${esc(s.repo)}</a>
+        <h2 id="detail-title">${esc(s.name)}</h2>
+        <a class="repo" href="https://github.com/${esc(s.repo)}" target="_blank" rel="noopener">${esc(s.repo)} ↗</a>
       </div>
       <p class="summary">${esc(s.summary)}</p>
       <dl class="facts">
@@ -183,8 +192,27 @@
         ${s.noMarket ? `<p class="hint">没有放进插件市场：${esc(s.noMarket)}。</p>` : ""}
         ${extras ? `<details class="more"><summary>${moreLabel}</summary><div class="more-body">${extras}</div></details>` : ""}
       </div>
-    </article>`;
+    </div>`;
   }
+
+  // The details dialog. Its address is #skill-<id>, so a link opens it and closing clears the hash.
+  const dialog = $("#detail");
+  let opener = null;
+  function openDetail(id) {
+    const s = byId[id];
+    if (!s) return;
+    opener = document.activeElement;
+    $("#detail-body").innerHTML = detailHtml(s);
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0;
+    if (location.hash !== `#skill-${id}`) history.replaceState(null, "", `#skill-${id}`);
+  }
+  dialog.addEventListener("close", () => {
+    if (location.hash.startsWith("#skill-")) history.replaceState(null, "", location.pathname + location.search);
+    opener?.focus?.({ preventScroll: true });
+  });
+  // A click on the dimmed backdrop lands on the dialog element itself.
+  dialog.addEventListener("click", (e) => { if (e.target === dialog || e.target.closest(".detail-close, [data-close]")) dialog.close(); });
 
   function matches(s) {
     if (state.stage && s.stage !== state.stage) return false;
@@ -234,7 +262,7 @@
   // A link like #skill-capcut-cli opens that card, even after filters or a search hid it.
   const openFromHash = () => {
     const id = decodeURIComponent(location.hash).replace(/^#skill-/, "");
-    if (location.hash.startsWith("#skill-") && byId[id]) jumpTo(id);
+    if (location.hash.startsWith("#skill-") && byId[id]) openDetail(id);
   };
   window.addEventListener("hashchange", openFromHash);
 
@@ -260,13 +288,6 @@
       </article>`;
     })
     .join("");
-
-  // Marketplace band: add it once, then install from any card or browse inside Claude Code.
-  $("#market-count").textContent = skills.filter(hasPlugin).length;
-  $("#market-cmds").innerHTML =
-    cmdBlock("1. 添加市场（只需一次）", addMarket) +
-    cmdBlock("2. 安装卡片上的 skill，比如", `claude plugin install ${pluginId(skills.find(hasPlugin))}`) +
-    cmdBlock("或者在 Claude Code 里浏览全部", "/plugin");
 
   // Visitor counter (functions/api/views.js): the server counts each IP once. The browser only asks it to
   // record a visit once per session, to save requests. Stays hidden if the counter isn't set up or

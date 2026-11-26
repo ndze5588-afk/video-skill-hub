@@ -2,11 +2,11 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="按制作环节整理的 AI 视频 skill 目录：可灵、即梦、海螺、剪映、Remotion、ElevenLabs 等，标清依赖、API key 和安装命令。">
 <meta property="og:title" content="Skill 剪辑台：AI 视频 skill 目录">
-<meta property="og:description" content="散落各处的视频 skill，排成一条时间线。标清依赖、API key 和安装命令，支持国产模型和剪映。">
+<meta property="og:description" content="写脚本、生成画面、配音、剪辑、加字幕，每一步都有现成的 AI 视频 skill。复制一行命令装好，支持国产模型和剪映。">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#fbfbfa">
 <style>
-/* Layout: a quiet product page. Centered hero, the stage timeline as the one visual, then the skill directory,
+/* Layout: a quiet product page. Centered hero, three beginner steps, the production steps as tiles, then the skill directory,
    workflows and install band, all on one neutral palette with stage colors used only as small dots and tints. */
 :root {
   --bg: #fbfbfa;
@@ -93,19 +93,31 @@ section { scroll-margin-top: 24px; }
 .btn.ghost { color: var(--ink); border-color: var(--line); background: var(--surface); }
 .btn.ghost:hover { border-color: var(--faint); }
 
-/* Timeline */
-.timeline-wrap { display: grid; gap: 14px; }
-.timeline-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
-.timeline { min-width: 920px; padding: 20px; display: grid; gap: 16px; }
-.cols { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.stage-btn {
-  all: unset; cursor: pointer; display: flex; align-items: baseline; gap: 8px; padding: 2px 4px 10px;
-  font-size: 13px; font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--line); margin-bottom: 4px;
+/* Steps for beginners */
+.start-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.start-steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.start-steps .n { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); font-size: 14px; font-weight: 600; }
+.start-steps h3 { font-size: 17px; margin: 4px 0 0; }
+.start-steps p { margin: 0; color: var(--body); font-size: 14.5px; line-height: 1.7; }
+.start-steps a { margin-top: auto; font-size: 14px; color: var(--accent); }
+.start-alt { margin: 0; font-size: 13.5px; color: var(--muted); }
+
+/* Stage tiles */
+.stage-tiles { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 1000px) { .stage-tiles { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
+.stage-tile {
+  all: unset; cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 16px 14px; border-radius: 16px; min-width: 0;
+  background: color-mix(in srgb, var(--clip) 8%, var(--surface)); border: 1px solid var(--line); transition: border-color .15s, background-color .15s;
 }
-.stage-btn .n { font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--faint); }
-.stage-btn:hover, .stage-btn[aria-pressed="true"] { border-bottom-color: var(--clip); }
-.stage-btn:focus-visible { outline: 2px solid var(--accent); }
+.stage-tile:hover, .stage-tile[aria-pressed="true"] { border-color: var(--clip); background: color-mix(in srgb, var(--clip) 14%, var(--surface)); }
+.stage-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stage-tile .n { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.stage-tile b { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink); }
+.stage-tile b::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--clip); }
+.stage-tile .hint { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.stage-tile .cnt { margin-top: auto; padding-top: 6px; font-size: 12.5px; color: var(--body); }
+
+/* Skill chips in workflow steps */
 .clip {
   all: unset; cursor: pointer; display: block; padding: 8px 10px; border-radius: 10px; min-width: 0;
   background: color-mix(in srgb, var(--clip) 9%, var(--surface));
@@ -116,10 +128,6 @@ section { scroll-margin-top: 24px; }
 .clip-name { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .clip-name::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--clip); }
 .clip-owner { display: block; margin-left: 13px; font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pipe { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: center; padding-top: 16px; border-top: 1px solid var(--line); }
-.pipe .stage-btn { border: 0; padding: 0; margin: 0; }
-.pipe-clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 6px; }
-.caption { text-align: center; font-size: 13px; color: var(--faint); margin: 0; }
 
 /* Sections */
 .section { padding-top: 120px; display: grid; gap: 28px; }
@@ -167,7 +175,32 @@ section { scroll-margin-top: 24px; }
   background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px;
   display: flex; flex-direction: column; gap: 14px; min-width: 0; scroll-margin-top: 24px; transition: box-shadow .3s, border-color .3s;
 }
-.card:hover { border-color: color-mix(in srgb, var(--faint) 60%, var(--line)); }
+.card { position: relative; gap: 12px; }
+.card:hover { border-color: color-mix(in srgb, var(--clip) 45%, var(--line)); }
+.card:has(.card-open:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.card-open { all: unset; cursor: pointer; }
+.card-open::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card-foot { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12.5px; color: var(--muted); }
+.card-foot .num { font-variant-numeric: tabular-nums; color: var(--body); }
+.card-foot .go { margin-left: auto; color: var(--faint); transition: color .2s; }
+.card:hover .go { color: var(--ink); }
+.detail {
+  width: min(640px, calc(100% - 24px)); max-height: min(88vh, 900px); padding: 0; border: 1px solid var(--line); border-radius: 20px;
+  background: var(--surface); color: var(--ink); overflow: auto; overscroll-behavior: contain;
+}
+.detail::backdrop { background: rgb(0 0 0 / 0.55); backdrop-filter: blur(2px); }
+.detail-inner { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+.detail-inner h2 { font-size: 24px; line-height: 1.3; margin: 0; }
+.detail-inner > .card-top { padding-right: 44px; }
+.hint a { color: var(--accent); }
+.detail-close {
+  all: unset; cursor: pointer; position: sticky; top: 14px; float: right; margin: 14px 14px -48px 0; z-index: 1;
+  width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; font-size: 20px; color: var(--muted); background: var(--code);
+}
+.detail-close:hover { color: var(--ink); }
+.detail-close:focus-visible { outline: 2px solid var(--accent); }
+.detail .install { margin-top: 4px; }
 .card.flash { box-shadow: 0 0 0 3px color-mix(in srgb, var(--clip) 45%, transparent); }
 .card-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .stage-tag { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
@@ -262,35 +295,66 @@ footer a:hover { color: var(--ink); }
   <header class="top">
     <a class="brand" href="#"><span class="brand-mark" aria-hidden="true"></span>Skill 剪辑台</a>
     <nav aria-label="页面导航">
+      <a href="#start">新手入门</a>
       <a href="#bin">全部 skill</a>
       <a href="#flows">工作流</a>
-      <a href="#market">一键安装</a>
     </nav>
   </header>
 
   <section class="hero" aria-labelledby="hero-title">
     <a class="pill" href="#bin" id="hero-pill">AI 视频 Agent Skills 目录</a>
-    <h1 id="hero-title">散落各处的视频 skill<br>排成一条时间线</h1>
-    <p class="lead">按制作环节整理，标清依赖、API key 和安装命令。</p>
+    <h1 id="hero-title">用 AI 做视频<br>从这里挑工具</h1>
+    <p class="lead">写脚本、生成画面、配音、剪辑、加字幕，每一步都有现成的 skill。<br>复制一行命令装好，再用中文告诉 AI 你想做什么。</p>
     <div class="cta">
-      <a class="btn primary" href="#bin">浏览全部 skill</a>
-      <a class="btn ghost" href="#flows">查看工作流</a>
+      <a class="btn primary" href="#start">第一次用？从这里开始</a>
+      <a class="btn ghost" href="#bin">直接看全部 skill</a>
     </div>
     <p class="views" id="views" hidden>已有 <b id="views-n"></b> 位访客</p>
   </section>
 
-  <div class="timeline-wrap">
-    <div class="timeline-scroll">
-      <div class="timeline" id="timeline" role="group" aria-label="按制作环节排列的 skill"></div>
+  <section id="start" class="section" aria-labelledby="start-title">
+    <div class="section-head">
+      <div>
+        <h2 id="start-title">第一次用？三步开始</h2>
+        <p>skill 是给 AI 助手的「技能包」。装上之后，AI 就会用对应的工具帮你干活。</p>
+      </div>
     </div>
-    <p class="caption">点环节名筛选，点任一 skill 查看详情</p>
-  </div>
+    <ol class="start-steps">
+      <li>
+        <span class="n">1</span>
+        <h3>装好 Claude Code</h3>
+        <p>它是在电脑终端里运行的 AI 助手。按官网的说明安装并登录。</p>
+        <a href="https://claude.com/claude-code" target="_blank" rel="noopener">打开官网 ↗</a>
+      </li>
+      <li>
+        <span class="n">2</span>
+        <h3>挑一个 skill，复制安装命令</h3>
+        <p>在下面点开想用的 skill，复制安装命令，粘贴到终端按回车就装好了。</p>
+      </li>
+      <li>
+        <span class="n">3</span>
+        <h3>用中文说出你要做什么</h3>
+        <p>在 Claude Code 里直接说，比如「把这段口播的口误剪掉，再加上字幕」。要用 API key 的 skill，详情里写了要哪家的 key。</p>
+      </li>
+    </ol>
+    <p class="start-alt">用 Cursor、Codex 等其他 AI 工具？点开 skill 详情，里面有对应的安装方式。</p>
+  </section>
+
+  <section id="stages" class="section" aria-labelledby="stages-title">
+    <div class="section-head">
+      <div>
+        <h2 id="stages-title">按制作步骤找</h2>
+        <p>一支视频大致分这几步，点一步就能看到对应的 skill。</p>
+      </div>
+    </div>
+    <div class="stage-tiles" id="timeline" role="group" aria-label="制作步骤"></div>
+  </section>
 
   <section id="bin" class="section" aria-labelledby="bin-title">
     <div class="section-head">
       <div>
         <h2 id="bin-title">全部 skill</h2>
-        <p>星数、许可证来自 GitHub，核对于 <span id="checked" class="mono"></span>；安装命令逐条对照上游仓库核对，最近一次在 <span id="install-checked" class="mono"></span>。</p>
+        <p>点开卡片看详情和安装命令。</p>
       </div>
       <span class="count" id="count" aria-live="polite"></span>
     </div>
@@ -322,18 +386,13 @@ footer a:hover { color: var(--ink); }
     <div class="flows" id="flow-list"></div>
   </section>
 
-  <section id="market" class="section" aria-labelledby="market-title">
-    <div class="market">
-      <div>
-        <h2 id="market-title">在 Claude Code 里一键安装</h2>
-        <p>Skill 剪辑台本身就是一个 Claude Code 插件市场，收录了其中 <b id="market-count"></b> 个 skill。每张卡片最上面的命令复制到终端运行即可：第一行添加市场（只需一次），第二行安装。Cursor、Codex 等其他 agent 用卡片里「其他安装方式」的命令。</p>
-      </div>
-      <div class="install" id="market-cmds"></div>
-    </div>
-  </section>
+  <dialog class="detail" id="detail" aria-labelledby="detail-title">
+    <button type="button" class="detail-close" aria-label="关闭">×</button>
+    <div id="detail-body"></div>
+  </dialog>
 
   <footer>
-    <p>收录的 skill 归各自作者所有，安装前请先读一遍 SKILL.md 和附带脚本。</p>
+    <p>收录的 skill 归各自作者所有，安装前请先读一遍 SKILL.md 和附带脚本。星数、许可证来自 GitHub，核对于 <span id="checked" class="mono"></span>；安装命令最近一次核对在 <span id="install-checked" class="mono"></span>。</p>
     <p>© 2026 Skill 剪辑台 · 整理内容采用 <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC 4.0</a>，转载请注明出处</p>
   </footer>
 </div>

@@ -1,6 +1,6 @@
 # Skill 剪辑台
 
-**把散落各处的 AI 视频 skill，排成一条时间线。**
+**用 AI 做视频，从这里挑工具：按制作步骤整理的 AI 视频 skill。**
 
 网站：https://video-skill-hub.pages.dev
 
