@@ -41,13 +41,16 @@
   const pipeClips = skills.filter((s) => s.stage === "pipeline").map(clipHtml).join("");
   $("#timeline").innerHTML = `<div class="cols">${cols}</div><div class="pipe"><button class="stage-btn" style="${clipVar("pipeline")}" data-stage="pipeline" aria-pressed="false" title="${esc(pipe.hint)}">${esc(pipe.name)}</button><div class="pipe-clips">${pipeClips}</div></div>`;
 
-  // Stage chips
-  $("#stage-chips").innerHTML =
-    `<button class="chip" data-stage="" aria-pressed="true">全部</button>` +
-    stages.map((st) => `<button class="chip" data-stage="${st.id}" aria-pressed="false" style="${clipVar(st.id)}"><span class="dot"></span>${esc(st.name)}</button>`).join("");
+  // Stage dropdown, with how many skills each stage holds
+  const perStage = (id) => skills.filter((s) => s.stage === id).length;
+  $("#stage").innerHTML =
+    `<option value="">全部环节（${skills.length}）</option>` +
+    stages.map((st) => `<option value="${st.id}">${esc(st.name)}（${perStage(st.id)}）</option>`).join("");
+  $("#stage").addEventListener("change", (e) => setStage(e.target.value));
 
   const setStage = (id) => {
     state.stage = id || null;
+    $("#stage").value = state.stage || "";
     document.querySelectorAll("[data-stage]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.stage || null) === state.stage)));
     render();
   };
@@ -70,8 +73,7 @@
     let card = document.getElementById(`skill-${id}`);
     if (!card) {
       state.q = ""; $("#q").value = "";
-      state.official = state.nokey = state.plugin = state.cn = false;
-      ["#f-official", "#f-nokey", "#f-plugin", "#f-cn"].forEach((s) => ($(s).checked = false));
+      clearToggles();
       setStage(null);
       card = document.getElementById(`skill-${id}`);
     }
@@ -101,9 +103,26 @@
 
   // Filters
   $("#q").addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
-  [["#f-official", "official"], ["#f-nokey", "nokey"], ["#f-plugin", "plugin"], ["#f-cn", "cn"]].forEach(([sel, key]) =>
-    $(sel).addEventListener("change", (e) => { state[key] = e.target.checked; render(); })
+  // The 筛选 dropdown: four checkboxes, with the number ticked shown on its button.
+  const toggles = [["#f-official", "official"], ["#f-nokey", "nokey"], ["#f-plugin", "plugin"], ["#f-cn", "cn"]];
+  const syncMore = () => {
+    const n = toggles.filter(([, key]) => state[key]).length;
+    $("#more-n").textContent = n;
+    $("#more-n").hidden = !n;
+  };
+  function clearToggles() {
+    toggles.forEach(([sel, key]) => { $(sel).checked = false; state[key] = false; });
+    syncMore();
+  }
+  toggles.forEach(([sel, key]) =>
+    $(sel).addEventListener("change", (e) => { state[key] = e.target.checked; syncMore(); render(); })
   );
+  $("#more-clear").addEventListener("click", () => { clearToggles(); render(); });
+  // Close the dropdown on a click outside it or on Escape.
+  document.addEventListener("click", (e) => { if (!e.target.closest("#more")) $("#more").open = false; });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("#more").open) { $("#more").open = false; $("#more > summary").focus(); }
+  });
 
   const cmdBlock = (label, cmd) =>
     `<div class="cmd"><span class="lbl">${esc(label)}</span><pre>${esc(cmd)}</pre><button class="copy" data-copy="${esc(cmd)}" aria-label="复制${esc(label)}命令">复制</button></div>`;

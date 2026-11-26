@@ -129,25 +129,37 @@ section { scroll-margin-top: 24px; }
 .count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* Filters */
-.filters { display: grid; gap: 14px; }
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
 .search {
-  width: 100%; height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid var(--line);
+  flex: 1 1 320px; min-width: 0; height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid var(--line);
   background: var(--surface); color: var(--ink); font: inherit; font-size: 15px;
 }
 .search::placeholder { color: var(--faint); }
 .search:focus { outline: none; border-color: var(--faint); }
-.chip-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.chip-row .sep { width: 1px; height: 20px; background: var(--line); margin: 0 4px; }
-.chip, .toggle {
-  all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px;
-  border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; color: var(--body);
-  user-select: none; white-space: nowrap;
+.select {
+  appearance: none; -webkit-appearance: none; cursor: pointer; height: 48px; padding: 0 40px 0 16px; border-radius: 14px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 14px;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; list-style: none; position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
 }
-.chip:hover, .toggle:hover { border-color: var(--faint); }
-.chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clip); }
-.chip[aria-pressed="true"], .toggle:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-.toggle input { position: absolute; opacity: 0; pointer-events: none; }
-.toggle:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.select::-webkit-details-marker { display: none; }
+.select:hover, .menu[open] > .select { border-color: var(--faint); }
+.select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.select option { color: var(--ink); background: var(--surface); }
+.select b { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: var(--bg); font-size: 12px; display: inline-grid; place-items: center; font-variant-numeric: tabular-nums; }
+.menu { position: relative; }
+.menu-panel {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 220px; padding: 6px;
+  border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 12px 32px rgb(0 0 0 / 0.18);
+  display: grid;
+}
+.menu-panel label { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 9px; font-size: 14px; color: var(--body); cursor: pointer; white-space: nowrap; }
+.menu-panel label:hover { background: var(--code); color: var(--ink); }
+.menu-panel input { width: 15px; height: 15px; accent-color: var(--ink); margin: 0; }
+.menu-clear { all: unset; cursor: pointer; margin-top: 4px; padding: 8px 10px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.menu-clear:hover { color: var(--ink); }
+@media (max-width: 560px) { .filters .select, .menu { flex: 1 1 0; } .menu > .select { width: 100%; } }
 
 /* Cards */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
@@ -237,7 +249,6 @@ footer a:hover { color: var(--ink); }
   .top nav a:first-child { display: none; }
   .section { padding-top: 88px; }
   .grid { grid-template-columns: 1fr; }
-  .chip-row .sep { display: none; }
 }
 </style>
 
@@ -279,14 +290,17 @@ footer a:hover { color: var(--ink); }
     </div>
     <div class="filters">
       <input id="q" class="search" type="search" placeholder="搜索名称、功能或模型，比如「字幕」「即梦」「Veo」" aria-label="搜索 skill">
-      <div class="chip-row" role="group" aria-label="筛选">
-        <span id="stage-chips" style="display:contents"></span>
-        <span class="sep" aria-hidden="true"></span>
-        <label class="toggle"><input type="checkbox" id="f-official">官方出品</label>
-        <label class="toggle"><input type="checkbox" id="f-cn">国产模型 / 剪映</label>
-        <label class="toggle"><input type="checkbox" id="f-nokey">无需 API key</label>
-        <label class="toggle"><input type="checkbox" id="f-plugin">Claude Code 一键安装</label>
-      </div>
+      <select id="stage" class="select" aria-label="按制作环节筛选"></select>
+      <details class="menu" id="more">
+        <summary class="select">筛选<b id="more-n" hidden></b></summary>
+        <div class="menu-panel" role="group" aria-label="更多筛选">
+          <label><input type="checkbox" id="f-official">官方出品</label>
+          <label><input type="checkbox" id="f-cn">国产模型 / 剪映</label>
+          <label><input type="checkbox" id="f-nokey">无需 API key</label>
+          <label><input type="checkbox" id="f-plugin">Claude Code 一键安装</label>
+          <button type="button" class="menu-clear" id="more-clear">清除</button>
+        </div>
+      </details>
     </div>
     <div class="grid" id="grid"></div>
   </section>
